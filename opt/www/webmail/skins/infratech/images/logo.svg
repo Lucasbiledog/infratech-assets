@@ -1,0 +1,41 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" width="300" height="80">
+
+  <!-- Ícone engrenagem/círculo -->
+
+  <circle cx="35" cy="35" r="18" fill="#6D6E71"/>
+
+  <circle cx="35" cy="35" r="10" fill="white"/>
+
+  <path d="M35 17 L35 25 M35 45 L35 53 M17 35 L25 35 M45 35 L53 35 M21 21 L27 27 M43 43 L49 49 M49 21 L43 27 M27 43 L21 49" stroke="white" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Parte vermelha do ícone -->
+
+  <path d="M35 17 A18 18 0 0 1 53 35 L45 35 A10 10 0 0 0 35 25 Z" fill="#E30613"/>
+
+  <!-- Parte verde do ícone -->
+
+  <path d="M35 53 A18 18 0 0 1 17 35 L25 35 A10 10 0 0 0 35 45 Z" fill="#00A650"/>
+
+  <!-- Letra I -->
+
+  <rect x="65" y="10" width="8" height="55" fill="#E30613"/>
+
+  <!-- Texto nfratech -->
+
+  <text x="76" y="58" font-family="Arial Black, sans-serif" font-size="42" font-weight="900" fill="#E30613">nfratech</text>
+
+  <!-- Linha decorativa -->
+
+  <rect x="65" y="67" width="235" height="3" fill="#E30613"/>
+
+  <rect x="65" y="71" width="235" height="2" fill="#6D6E71"/>
+
+  <rect x="65" y="74" width="235" height="2" fill="#00A650"/>
+
+  <!-- Engenharia -->
+
+  <text x="76" y="80" font-family="Arial, sans-serif" font-size="13" fill="#6D6E71">Engenharia</text>
+
+</svg>
+
