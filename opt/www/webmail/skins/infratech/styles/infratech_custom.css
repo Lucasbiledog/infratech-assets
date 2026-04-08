@@ -268,13 +268,15 @@
 }
 
 /* ---- BOTÃO COMPOR — vermelho ---- */
-#taskmenu .action-buttons > a.compose {
+#taskmenu .action-buttons > a.compose,
+#taskmenu a.compose {
   background: var(--it-red) !important;
   box-shadow: 0 2px 8px rgba(227,6,19,.4) !important;
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
   color: #fff !important;
+  /* elastic define color:#E30613 e background:0 0 — sobrescrever */
 }
 #taskmenu .action-buttons > a.compose::before {
   color: #fff !important;
@@ -341,13 +343,15 @@
   margin: 1px 0 !important;
 }
 
-/* Espaço no fundo do #taskmenu para os botões não cobrirem os links */
+/* Espaço reservado para os .special-buttons absolutos não cobrir links.
+   Calculado: 4 botões × 42px + 8px padding = ~176px */
 #taskmenu::after {
   content: '' !important;
   display: block !important;
-  /* altura = 4 botões × 40px + padding = ~175px */
-  min-height: 175px !important;
+  height: 176px !important;
+  min-height: 176px !important;
   flex-shrink: 0 !important;
+  pointer-events: none !important;
 }
 
 /* ================================================================
@@ -486,14 +490,18 @@
 #layout-list {
   background: #fff !important;
   border-right: 1px solid var(--it-border) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
 }
 
-/* Header da lista */
+/* Header da lista — posição estática no fluxo flex */
 #messagelist-header,
 #layout-list .header {
   background: #fff !important;
   border-bottom: 1px solid var(--it-border) !important;
   height: 42px !important;
+  min-height: 42px !important;
   padding: 0 10px 0 12px !important;
   display: flex !important;
   align-items: center !important;
@@ -501,13 +509,21 @@
   font-size: 12px !important;
   font-weight: 600 !important;
   color: #222 !important;
+  flex-shrink: 0 !important;
+  /* NUNCA position:absolute — deve empurrar o conteúdo abaixo */
+  position: relative !important;
+  top: auto !important;
 }
 
-/* Caixa de busca */
+/* Searchbar — também no fluxo flex, abaixo do header */
 #layout-list .searchbar,
 #layout-list .search {
   border-bottom: 1px solid var(--it-border) !important;
   padding: 7px 10px !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  top: auto !important;
+  background: #fff !important;
 }
 
 #layout-list .searchbar input,
@@ -527,6 +543,26 @@
 #layout-list #quicksearchbox:focus {
   border-color: var(--it-red) !important;
   background: #fff !important;
+}
+
+/* Área de scroll da lista — ocupa o espaço restante */
+#layout-list .content,
+#layout-list #messagelist-box {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  min-height: 0 !important;
+}
+
+/* Paginação — fixa no fundo, não cresce */
+#layout-list .footer,
+#layout-list .listing-footer {
+  flex-shrink: 0 !important;
+  position: relative !important;
+  background: #fff !important;
+  border-top: 1px solid var(--it-border) !important;
+  min-height: 0 !important;
+  padding: 4px 8px !important;
 }
 
 /* ---- Linhas de mensagem ---- */
@@ -601,10 +637,23 @@
 }
 
 /* ================================================================
+   WATERMARK — não bloqueia cliques
+   ================================================================ */
+#watermark,
+.watermark,
+iframe#watermark {
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* ================================================================
    PAINEL DE CONTEÚDO / LEITURA
    ================================================================ */
 #layout-content {
   background: #fff !important;
+  /* Garante que o painel de leitura é clicável */
+  pointer-events: auto !important;
+  position: relative !important;
 }
 
 #layout-content > .header {
