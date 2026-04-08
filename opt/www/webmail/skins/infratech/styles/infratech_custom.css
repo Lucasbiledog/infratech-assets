@@ -168,11 +168,10 @@
   min-width: var(--it-menu-w) !important;
   max-width: var(--it-menu-w) !important;
   border-right: 1px solid rgba(255,255,255,.04) !important;
-  /* sem overflow:hidden — não corta o compose nem os ícones */
-  overflow: visible !important;
-  position: static !important;
-  display: flex !important;
-  flex-direction: column !important;
+  overflow: hidden !important;
+  /* position:relative para .special-buttons absolute ficarem dentro */
+  position: relative !important;
+  flex-shrink: 0 !important;
 }
 
 /* Esconde cabeçalho original do elastic */
@@ -180,25 +179,22 @@
   display: none !important;
 }
 
-/* Flex column que ocupa 100% da altura:
-   - action-buttons (compose) no topo
-   - links de navegação no meio
-   - special-buttons empurrados ao fundo via margin-top:auto
-   SEM position:absolute, SEM padding-bottom hack */
+/* #taskmenu = flex column, height 100%, position:relative
+   para o .special-buttons absolute se ancorar aqui */
 #taskmenu {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding: 8px 0 8px !important;
+  padding: 8px 0 0 !important;
   gap: 2px !important;
   height: 100% !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  position: static !important;
+  position: relative !important;
   overflow: hidden !important;
 }
 
-/* ---- span.action-buttons (contém o compose) ---- */
+/* ---- span.action-buttons (compose) ---- */
 #taskmenu .action-buttons {
   display: flex !important;
   flex-direction: column !important;
@@ -208,7 +204,7 @@
   flex-shrink: 0 !important;
 }
 
-/* ---- Todos os links de navegação ---- */
+/* ---- Links de navegação (mail, contacts, settings) ---- */
 #taskmenu > a,
 #taskmenu .action-buttons > a {
   display: flex !important;
@@ -226,26 +222,25 @@
   flex-shrink: 0 !important;
 }
 
-/* ---- .inner: oculta texto, preserva ícone ::before ---- */
+/* ---- .inner: escondido pelo elastic em modo compacto — ignoramos ---- */
 #taskmenu > a .inner,
 #taskmenu .action-buttons > a .inner,
 #taskmenu .special-buttons > a .inner {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 38px !important;
-  height: 38px !important;
-  font-size: 0 !important;
-  color: transparent !important;
+  display: none !important;
 }
 
-/* Restaura ícone FontAwesome */
-#taskmenu > a .inner::before,
-#taskmenu .action-buttons > a .inner::before,
-#taskmenu .special-buttons > a .inner::before {
+/* ---- O ícone real vem do a::before no elastic ----
+   Resetamos float, margin e centralizamos via line-height */
+#taskmenu > a::before,
+#taskmenu .action-buttons > a::before,
+#taskmenu .special-buttons > a::before {
+  float: none !important;
+  margin: 0 !important;
+  width: 100% !important;
+  line-height: 38px !important;
   font-size: 16px !important;
-  color: #555 !important;
-  line-height: 1 !important;
+  color: #777 !important;
+  text-align: center !important;
   display: block !important;
 }
 
@@ -254,10 +249,11 @@
 #taskmenu .action-buttons > a:hover,
 #taskmenu .special-buttons > a:hover {
   background: rgba(255,255,255,.07) !important;
+  color: #ccc !important;
 }
-#taskmenu > a:hover .inner::before,
-#taskmenu .action-buttons > a:hover .inner::before,
-#taskmenu .special-buttons > a:hover .inner::before {
+#taskmenu > a:hover::before,
+#taskmenu .action-buttons > a:hover::before,
+#taskmenu .special-buttons > a:hover::before {
   color: #ccc !important;
 }
 
@@ -266,30 +262,39 @@
 #taskmenu > a.active {
   background: var(--it-red) !important;
 }
-#taskmenu > a.selected .inner::before,
-#taskmenu > a.active .inner::before {
+#taskmenu > a.selected::before,
+#taskmenu > a.active::before {
   color: #fff !important;
 }
 
-/* ---- BOTÃO COMPOR — vermelho com sombra ---- */
+/* ---- BOTÃO COMPOR — vermelho ---- */
 #taskmenu .action-buttons > a.compose {
   background: var(--it-red) !important;
   box-shadow: 0 2px 8px rgba(227,6,19,.4) !important;
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
-  z-index: 1 !important;
+  color: #fff !important;
 }
-#taskmenu .action-buttons > a.compose .inner::before {
+#taskmenu .action-buttons > a.compose::before {
   color: #fff !important;
   font-size: 16px !important;
+  line-height: 38px !important;
 }
 #taskmenu .action-buttons > a.compose:hover {
   background: var(--it-red-dark) !important;
   box-shadow: 0 2px 12px rgba(227,6,19,.5) !important;
 }
 
-/* Divisor visual no menu */
+/* Logout hover vermelho */
+#taskmenu .special-buttons > a.logout:hover {
+  background: rgba(227,6,19,.15) !important;
+}
+#taskmenu .special-buttons > a.logout:hover::before {
+  color: var(--it-red) !important;
+}
+
+/* Divisor */
 #taskmenu .menu-divider,
 #taskmenu hr {
   width: 24px !important;
@@ -300,26 +305,24 @@
   flex-shrink: 0 !important;
 }
 
-/* ---- span.special-buttons — empurrado ao rodapé via margin-top:auto ---- */
+/* ---- span.special-buttons — position:absolute no rodapé ----
+   Âncora no #taskmenu (position:relative).
+   Esta é a abordagem mais confiável contra o JS do elastic. */
 #taskmenu .special-buttons {
-  /* Sem position:absolute — usa o fluxo flex normal */
-  position: static !important;
-  bottom: auto !important;
-  left: auto !important;
-  right: auto !important;
-  /* margin-top:auto empurra este bloco para o fundo do flex column */
-  margin-top: auto !important;
-  width: 100% !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   padding: 0 0 8px !important;
   gap: 2px !important;
-  flex-shrink: 0 !important;
-  background: transparent !important;
+  background: var(--it-menu-bg) !important;
+  z-index: 2 !important;
 }
 
-/* Botões dentro do special-buttons */
+/* Botões do special-buttons */
 #taskmenu .special-buttons > a {
   display: flex !important;
   align-items: center !important;
@@ -333,12 +336,13 @@
   margin: 1px 0 !important;
 }
 
-/* Logout hover vermelho */
-#taskmenu .special-buttons > a.logout:hover {
-  background: rgba(227,6,19,.15) !important;
-}
-#taskmenu .special-buttons > a.logout:hover .inner::before {
-  color: var(--it-red) !important;
+/* Espaço no fundo do #taskmenu para os botões não cobrirem os links */
+#taskmenu::after {
+  content: '' !important;
+  display: block !important;
+  /* altura = 4 botões × 40px + padding = ~175px */
+  min-height: 175px !important;
+  flex-shrink: 0 !important;
 }
 
 /* ================================================================
@@ -774,6 +778,11 @@ body.task-login .btn-primary:hover {
 html.dark-mode #infratech-header { background: #0d0d0d !important; }
 html.dark-mode #layout-menu { background: #161616 !important; }
 html.dark-mode #taskmenu .special-buttons { background: #161616 !important; }
+html.dark-mode #taskmenu > a::before,
+html.dark-mode #taskmenu .action-buttons > a:not(.compose)::before,
+html.dark-mode #taskmenu .special-buttons > a::before { color: #555 !important; }
+html.dark-mode #taskmenu > a:hover::before,
+html.dark-mode #taskmenu .special-buttons > a:hover::before { color: #aaa !important; }
 
 html.dark-mode #taskmenu > a .inner::before,
 html.dark-mode #taskmenu .action-buttons > a:not(.compose) .inner::before,
