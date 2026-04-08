@@ -666,62 +666,49 @@ a.reply.btn:hover:not(.disabled) {
    TELA DE LOGIN
    ================================================================ */
 
-/* Esconde o header customizado na tela de login */
-.task-login #infratech-header {
+/* body.task-login = tela de login do Roundcube */
+
+/* Esconde o header customizado */
+body.task-login #infratech-header {
   display: none !important;
 }
 
-/* html e body 100vh sem overflow */
-.task-login,
-.task-login body {
-  height: 100% !important;
-  min-height: 100vh !important;
+/* Fundo escuro cobrindo tudo */
+body.task-login {
+  background: #141414 !important;
   margin: 0 !important;
   padding: 0 !important;
-  background: #141414 !important;
   overflow: hidden !important;
 }
 
-/* #layout ocupa tela inteira, sem deslocamento do header */
-.task-login #layout {
+/* Cobre o restante com fundo escuro */
+body.task-login #layout,
+body.task-login #layout-content {
   position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  height: 100% !important;
-}
-
-/* Container centraliza o card */
-.task-login #layout-content {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
+  top: 0 !important; left: 0 !important;
+  right: 0 !important; bottom: 0 !important;
   background: #141414 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  z-index: 100 !important;
-  overflow-y: auto !important;
+  display: block !important;
 }
 
-/* Card branco do formulário */
-.task-login .propform {
+/* Card centralizado com transform — funciona independente do pai */
+body.task-login .propform {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 500 !important;
   background: #fff !important;
   border-radius: 12px !important;
   padding: 36px 32px 28px !important;
   box-shadow: 0 16px 48px rgba(0,0,0,.55) !important;
   width: 380px !important;
   max-width: calc(100vw - 32px) !important;
-  position: relative !important;
+  box-sizing: border-box !important;
 }
 
 /* Logo dentro do card — resetar position:relative;top:16vh do elastic */
-.task-login #logo {
+body.task-login #logo {
   display: block !important;
   position: static !important;
   top: auto !important;
@@ -733,22 +720,22 @@ a.reply.btn:hover:not(.disabled) {
 }
 
 /* Campos do formulário */
-.task-login .form-control {
+body.task-login .form-control {
   border-radius: 6px !important;
   border: 1px solid #ddd !important;
   font-size: 13px !important;
 }
 
-.task-login .form-control:focus {
+body.task-login .form-control:focus {
   border-color: var(--it-red) !important;
   box-shadow: 0 0 0 .15rem rgba(227,6,19,.15) !important;
   outline: none !important;
 }
 
 /* Botão Entrar */
-.task-login .btn-primary,
-.task-login #login-form input[type="submit"],
-.task-login #login-form button[type="submit"] {
+body.task-login .btn-primary,
+body.task-login #login-form input[type="submit"],
+body.task-login #login-form button[type="submit"] {
   background: var(--it-red) !important;
   border-color: var(--it-red) !important;
   color: #fff !important;
@@ -759,7 +746,7 @@ a.reply.btn:hover:not(.disabled) {
   padding: 10px !important;
 }
 
-.task-login .btn-primary:hover {
+body.task-login .btn-primary:hover {
   background: var(--it-red-dark) !important;
   border-color: var(--it-red-dark) !important;
 }
