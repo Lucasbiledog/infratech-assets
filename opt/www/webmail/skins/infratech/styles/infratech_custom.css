@@ -280,6 +280,11 @@
   color: #fff !important;
   font-size: 16px !important;
   line-height: 38px !important;
+  float: none !important;
+  margin: 0 !important;
+  width: 100% !important;
+  text-align: center !important;
+  display: block !important;
 }
 #taskmenu .action-buttons > a.compose:hover {
   background: var(--it-red-dark) !important;
