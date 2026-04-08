@@ -84,9 +84,13 @@
   color: #fff !important;
   letter-spacing: 0.2px !important;
   line-height: 1 !important;
+  white-space: nowrap !important;
 }
 
-.it-brand-name span { color: var(--it-red) !important; }
+/* "Infra" em vermelho */
+.it-brand-name span {
+  color: var(--it-red) !important;
+}
 
 .it-brand-sub {
   font-size: 9px !important;
@@ -95,17 +99,24 @@
   letter-spacing: 1.5px !important;
   text-transform: uppercase !important;
   line-height: 1 !important;
+  white-space: nowrap !important;
 }
 
 .it-header-right {
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
+  margin-left: auto !important;
+  padding-right: 4px !important;
 }
 
 .it-user-email {
-  color: #888 !important;
+  color: #777 !important;
   font-size: 12px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 280px !important;
 }
 
 /* ================================================================
@@ -129,18 +140,13 @@ body {
 }
 
 /* ================================================================
-   TASK MENU — barra de ícones fina (52px)
+   TASK MENU — barra lateral de ícones (52px)
 
-   COMO FUNCIONA O ELASTIC:
-   - Botões são <a class="button mail"><span class="inner">Email</span></a>
-   - O ÍCONE vem do CSS ::before (FontAwesome) aplicado em .inner
-   - O TEXTO está dentro do <span class="inner">
-   - Special-buttons usa position:absolute;bottom:0 no elastic
-
-   ESTRATÉGIA:
-   - font-size:0 em .inner oculta o texto
-   - ::before mantém font-size normal (ícone visível)
-   - Substituímos position:absolute dos special-buttons por relative
+   Elastic skin: botões são <a class="button compose/mail/...">
+     <span class="inner">Label</span></a>
+   Ícones vêm de ::before (FontAwesome) no .inner
+   Texto está no conteúdo do .inner (text node)
+   Special-buttons: position:absolute;bottom:0 no original
    ================================================================ */
 #layout-menu {
   background: var(--it-menu-bg) !important;
@@ -151,29 +157,31 @@ body {
   overflow: hidden !important;
   display: flex !important;
   flex-direction: column !important;
+  position: relative !important;
 }
 
-/* Esconde o cabeçalho do popover (logo original) */
+/* Esconde cabeçalho com logo original */
 #layout-menu .popover-header {
   display: none !important;
 }
 
-/* Container do menu de tarefas */
+/* Container principal do menu */
 #taskmenu {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding: 8px 0 !important;
-  gap: 2px !important;
+  padding: 8px 0 6px !important;
+  gap: 3px !important;
   flex: 1 !important;
   overflow: hidden !important;
   width: 100% !important;
   box-sizing: border-box !important;
+  position: static !important;
 }
 
-/* ---- Botões do menu ---- */
-#taskmenu a.button,
+/* Todos os botões de navegação */
 #taskmenu a {
+  position: relative !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -182,7 +190,7 @@ body {
   min-height: 38px !important;
   max-height: 38px !important;
   border-radius: 8px !important;
-  color: #666 !important;
+  color: #777 !important;
   text-decoration: none !important;
   transition: background 0.15s, color 0.15s !important;
   overflow: hidden !important;
@@ -190,87 +198,90 @@ body {
   flex-shrink: 0 !important;
 }
 
-/* O .inner guarda o texto e o ícone (via ::before)
-   Ocultamos o texto com font-size:0, o ícone (::before) continua visível */
+/* .inner: esconde o texto, mantém o ícone ::before */
 #taskmenu a .inner {
+  position: relative !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   width: 38px !important;
   height: 38px !important;
-  font-size: 0 !important;       /* oculta texto */
+  /* Esconde o texto do nó filho */
+  font-size: 0 !important;
+  color: transparent !important;
   line-height: 0 !important;
-  color: inherit !important;
 }
 
-/* Restaura tamanho do ícone FontAwesome no ::before */
+/* Restaura ícone FontAwesome */
 #taskmenu a .inner::before {
-  font-size: 16px !important;
+  font-size: 17px !important;
   line-height: 1 !important;
+  color: inherit !important;
   display: block !important;
 }
 
-/* Hover */
+/* Hover estado */
 #taskmenu a:hover {
-  background: rgba(255,255,255,.08) !important;
-  color: #ccc !important;
+  background: rgba(255,255,255,.07) !important;
+  color: #bbb !important;
 }
 
-/* Ativo/selecionado */
+/* Estado ativo */
 #taskmenu a.selected,
 #taskmenu a.active {
   background: var(--it-red) !important;
   color: #fff !important;
 }
+#taskmenu a.selected .inner::before,
+#taskmenu a.active .inner::before {
+  color: #fff !important;
+}
 
-/* Botão Compor (sempre vermelho, com ou sem classe selected) */
-#taskmenu a.compose,
-#taskmenu a.compose.selected,
-#taskmenu .action-buttons a {
+/* ---- Botão COMPOR — sempre vermelho ---- */
+#taskmenu a.compose {
   background: var(--it-red) !important;
   color: #fff !important;
-  box-shadow: 0 2px 8px rgba(227,6,19,.35) !important;
+  box-shadow: 0 2px 8px rgba(227,6,19,.4) !important;
   margin-bottom: 6px !important;
-  width: 38px !important;
-  height: 38px !important;
-  border-radius: 8px !important;
-  display: flex !important;
 }
-#taskmenu a.compose:hover,
-#taskmenu .action-buttons a:hover {
+#taskmenu a.compose .inner::before {
+  color: #fff !important;
+}
+#taskmenu a.compose:hover {
   background: var(--it-red-dark) !important;
-  box-shadow: 0 2px 12px rgba(227,6,19,.5) !important;
+  box-shadow: 0 3px 12px rgba(227,6,19,.5) !important;
 }
 
-/* Bloco de ações (compose) */
+/* Bloco action-buttons (contém o compose) */
 #taskmenu .action-buttons {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  gap: 2px !important;
   width: 100% !important;
   flex-shrink: 0 !important;
+  padding-top: 2px !important;
 }
 
-/* Special buttons (about, logout, dark mode)
-   No elastic skin original ficam position:absolute;bottom:0
-   Sobrescrevemos para position:relative no fluxo flex */
+/* ---- Special buttons (config, dark, about, logout) ----
+   No elastic original: position:absolute; bottom:0; left:0; right:0
+   Aqui: removemos o absolute e usamos margin-top:auto para empurrar
+   ao fundo dentro do flex column */
 #taskmenu .special-buttons {
-  position: relative !important;
+  position: static !important;
   bottom: auto !important;
   left: auto !important;
   right: auto !important;
-  margin-top: auto !important;     /* empurra para o fundo */
+  width: 100% !important;
+  margin-top: auto !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  gap: 2px !important;
+  gap: 3px !important;
   padding-bottom: 8px !important;
-  width: 100% !important;
   flex-shrink: 0 !important;
 }
 
-/* Logout em vermelho suave */
+/* Logout */
 #taskmenu a.logout:hover {
   background: rgba(227,6,19,.15) !important;
   color: var(--it-red) !important;
