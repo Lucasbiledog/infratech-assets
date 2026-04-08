@@ -168,8 +168,11 @@
   min-width: var(--it-menu-w) !important;
   max-width: var(--it-menu-w) !important;
   border-right: 1px solid rgba(255,255,255,.04) !important;
-  overflow: hidden !important;
-  position: relative !important;
+  /* sem overflow:hidden — não corta o compose nem os ícones */
+  overflow: visible !important;
+  position: static !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 /* Esconde cabeçalho original do elastic */
@@ -177,18 +180,22 @@
   display: none !important;
 }
 
-/* Flex column — position:static para .special-buttons absolutos
-   ficarem relativos ao #layout-menu (que tem position:relative) */
+/* Flex column que ocupa 100% da altura:
+   - action-buttons (compose) no topo
+   - links de navegação no meio
+   - special-buttons empurrados ao fundo via margin-top:auto
+   SEM position:absolute, SEM padding-bottom hack */
 #taskmenu {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding: 8px 0 170px !important;
+  padding: 8px 0 8px !important;
   gap: 2px !important;
   height: 100% !important;
   width: 100% !important;
   box-sizing: border-box !important;
   position: static !important;
+  overflow: hidden !important;
 }
 
 /* ---- span.action-buttons (contém o compose) ---- */
@@ -197,7 +204,7 @@
   flex-direction: column !important;
   align-items: center !important;
   width: 100% !important;
-  padding: 0 0 8px 0 !important;
+  padding: 0 0 6px 0 !important;
   flex-shrink: 0 !important;
 }
 
@@ -271,9 +278,11 @@
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
+  z-index: 1 !important;
 }
 #taskmenu .action-buttons > a.compose .inner::before {
   color: #fff !important;
+  font-size: 16px !important;
 }
 #taskmenu .action-buttons > a.compose:hover {
   background: var(--it-red-dark) !important;
@@ -291,19 +300,23 @@
   flex-shrink: 0 !important;
 }
 
-/* ---- span.special-buttons — ancorado ao #layout-menu ---- */
+/* ---- span.special-buttons — empurrado ao rodapé via margin-top:auto ---- */
 #taskmenu .special-buttons {
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
+  /* Sem position:absolute — usa o fluxo flex normal */
+  position: static !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  /* margin-top:auto empurra este bloco para o fundo do flex column */
+  margin-top: auto !important;
   width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   padding: 0 0 8px !important;
   gap: 2px !important;
-  background: var(--it-menu-bg) !important;
+  flex-shrink: 0 !important;
+  background: transparent !important;
 }
 
 /* Botões dentro do special-buttons */
