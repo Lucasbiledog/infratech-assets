@@ -135,10 +135,12 @@ body {
   min-width: var(--it-menu-w) !important;
   max-width: var(--it-menu-w) !important;
   border-right: none !important;
-  overflow: visible !important;
+  overflow: hidden !important;  /* CRÍTICO: impede special-buttons de vazar */
+  position: relative !important;
+  z-index: 10 !important;
 }
 
-/* Hide original logo in menu header — we have one in the top bar */
+/* Esconde logo do menu — temos logo no header */
 #layout-menu .popover-header {
   display: none !important;
 }
@@ -152,11 +154,12 @@ body {
   gap: 2px !important;
   height: 100% !important;
   overflow: hidden !important;
-  box-sizing: border-box !important;
   width: 100% !important;
+  box-sizing: border-box !important;
+  position: relative !important;
 }
 
-/* All menu buttons */
+/* Todos os botões do menu */
 #taskmenu a,
 #taskmenu span.button,
 #taskmenu button {
@@ -174,72 +177,66 @@ body {
   transition: background 0.15s ease, color 0.15s ease !important;
   overflow: hidden !important;
   padding: 0 !important;
-  white-space: nowrap !important;
-  font-size: 0 !important; /* oculta texto direto no botão */
+  max-width: 36px !important;
+  /* Oculta texto — mostra apenas ícone */
+  font-size: 0 !important;
+  line-height: 0 !important;
+  letter-spacing: -999px !important;
+  text-indent: -9999px !important;
 }
 
-/* Icon inside button — restaura tamanho do ícone */
+/* Ícone .inner — restaura visibilidade */
 #taskmenu a .inner,
 #taskmenu span.button .inner,
 #taskmenu button .inner {
-  font-size: 15px !important;
+  font-size: 16px !important;
   line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-indent: 0 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 100% !important;
-  height: 100% !important;
-  overflow: hidden !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  flex-shrink: 0 !important;
 }
 
-/* Oculta texto/labels que vêm fora do .inner */
-#taskmenu a > span:not(.inner),
-#taskmenu span.button > span:not(.inner),
-#taskmenu a > b,
-#taskmenu a > em,
-#taskmenu .inner::after {
-  display: none !important;
-  width: 0 !important;
-  overflow: hidden !important;
-}
-
-/* Hover state */
+/* Hover */
 #taskmenu a:hover,
 #taskmenu span.button:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #fff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ddd !important;
 }
 
-/* Active / selected state */
+/* Ativo/selecionado */
 #taskmenu a.selected,
 #taskmenu a.active {
   background: var(--it-red) !important;
   color: #fff !important;
 }
 
-/* Compose / Novo Email — always red */
+/* Botão Compor — sempre vermelho */
 #taskmenu a.compose,
 #taskmenu span.compose {
   background: var(--it-red) !important;
   color: #fff !important;
-  margin-bottom: 6px !important;
+  margin-bottom: 4px !important;
+  box-shadow: 0 2px 6px rgba(227, 6, 19, 0.35) !important;
 }
+#taskmenu a.compose:hover { background: var(--it-red-dark) !important; }
 
-#taskmenu a.compose:hover,
-#taskmenu span.compose:hover {
-  background: var(--it-red-dark) !important;
-}
-
-/* Action buttons block */
+/* Bloco de ações (compose) */
 #taskmenu .action-buttons {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   gap: 2px !important;
   width: 100% !important;
+  flex-shrink: 0 !important;
 }
 
-/* Special buttons pushed to bottom */
+/* Botões especiais (about, logout, theme) — ficam no fundo */
 #taskmenu .special-buttons {
   margin-top: auto !important;
   display: flex !important;
@@ -248,15 +245,15 @@ body {
   gap: 2px !important;
   padding-bottom: 6px !important;
   width: 100% !important;
+  flex-shrink: 0 !important;
+  /* Garante que não saia do #layout-menu */
+  position: relative !important;
+  z-index: 1 !important;
 }
 
-/* Logout icon */
-#taskmenu a.logout .inner::before {
-  color: #e57373 !important;
-}
-
+/* Logout */
 #taskmenu a.logout:hover {
-  background: rgba(227, 6, 19, 0.2) !important;
+  background: rgba(227, 6, 19, 0.15) !important;
   color: var(--it-red) !important;
 }
 
