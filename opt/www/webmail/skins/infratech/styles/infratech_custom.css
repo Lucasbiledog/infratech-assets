@@ -52,21 +52,23 @@
   align-items: center !important;
   justify-content: center !important;
   flex-shrink: 0 !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;
 }
 
+/* Esconde a imagem — usamos só o bloco vermelho com sigla */
 .it-logo-block img {
-  height: 28px !important;
-  width: auto !important;
-  object-fit: contain !important;
-  filter: brightness(0) invert(1) !important; /* logo branco */
+  display: none !important;
 }
 
-/* Fallback se não tiver logo: sigla */
+/* Sigla IE sempre visível */
 .it-logo-initials {
-  font-size: 14px !important;
+  display: flex !important;
+  font-size: 15px !important;
   font-weight: 900 !important;
   color: #fff !important;
   letter-spacing: -0.5px !important;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 .it-brand-wrap {
@@ -221,15 +223,23 @@ body {
   color: #fff !important;
 }
 
-/* Botão Compor (sempre vermelho) */
-#taskmenu a.compose {
+/* Botão Compor (sempre vermelho, com ou sem classe selected) */
+#taskmenu a.compose,
+#taskmenu a.compose.selected,
+#taskmenu .action-buttons a {
   background: var(--it-red) !important;
   color: #fff !important;
   box-shadow: 0 2px 8px rgba(227,6,19,.35) !important;
   margin-bottom: 6px !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 8px !important;
+  display: flex !important;
 }
-#taskmenu a.compose:hover {
+#taskmenu a.compose:hover,
+#taskmenu .action-buttons a:hover {
   background: var(--it-red-dark) !important;
+  box-shadow: 0 2px 12px rgba(227,6,19,.5) !important;
 }
 
 /* Bloco de ações (compose) */
