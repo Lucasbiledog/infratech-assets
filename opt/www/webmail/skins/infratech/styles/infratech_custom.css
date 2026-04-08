@@ -1,6 +1,6 @@
 /* ================================================================
    INFRATECH ENGENHARIA — Custom Roundcube Theme
-   Seletores baseados no HTML real gerado pelo Roundcube/Elastic
+   Baseado no preview.html — alinhado ao design planejado
    ================================================================ */
 
 :root {
@@ -9,13 +9,19 @@
   --it-red-light:  #fff5f5;
   --it-gray:       #6D6E71;
   --it-green:      #00A650;
-  --it-header-bg:  #1a1a1a;
-  --it-menu-bg:    #222222;
+  --it-header-bg:  #141414;
+  --it-menu-bg:    #1e1e1e;
   --it-sidebar-bg: #f8f8f8;
   --it-border:     #e8e8e8;
   --it-header-h:   52px;
   --it-menu-w:     52px;
+  --it-font:       'Inter', 'Segoe UI', system-ui, sans-serif;
 }
+
+/* Fonte Inter do Google (carregada via @import) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* { font-family: var(--it-font) !important; }
 
 /* ================================================================
    HEADER FIXO NO TOPO
@@ -30,7 +36,7 @@
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 0 !important;
+  padding: 0 14px 0 0 !important;
   z-index: 1050 !important;
   box-shadow: 0 1px 0 rgba(255,255,255,.05), 0 2px 12px rgba(0,0,0,.5) !important;
 }
@@ -39,10 +45,9 @@
   display: flex !important;
   align-items: center !important;
   height: 100% !important;
-  gap: 0 !important;
 }
 
-/* Bloco vermelho alinhado à largura do menu */
+/* Bloco vermelho — alinhado à largura do menu lateral */
 .it-logo-block {
   width: var(--it-menu-w) !important;
   height: 100% !important;
@@ -58,7 +63,6 @@
   font-weight: 900 !important;
   color: #fff !important;
   letter-spacing: -.5px !important;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
 .it-brand-wrap {
@@ -66,19 +70,18 @@
   display: flex !important;
   flex-direction: column !important;
   gap: 3px !important;
-  border-left: 1px solid rgba(255,255,255,.07) !important;
+  border-left: 1px solid rgba(255,255,255,.06) !important;
   height: 100% !important;
   justify-content: center !important;
 }
 
 .it-brand-name {
   font-size: 13px !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
   color: #fff !important;
   letter-spacing: .2px !important;
   line-height: 1 !important;
   white-space: nowrap !important;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
 .it-brand-name span { color: var(--it-red) !important; }
@@ -86,8 +89,8 @@
 .it-brand-sub {
   font-size: 9px !important;
   font-weight: 500 !important;
-  color: #4a4a4a !important;
-  letter-spacing: 1.5px !important;
+  color: #555 !important;
+  letter-spacing: 1.8px !important;
   text-transform: uppercase !important;
   line-height: 1 !important;
   white-space: nowrap !important;
@@ -96,20 +99,55 @@
 .it-header-right {
   display: flex !important;
   align-items: center !important;
-  padding-right: 16px !important;
+  gap: 8px !important;
+  padding-right: 2px !important;
   margin-left: auto !important;
 }
 
-.it-user-email {
-  color: #666 !important;
+/* Info do usuário (nome + email) */
+.it-user-info {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 1px !important;
+}
+
+.it-user-name {
   font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #ddd !important;
+  line-height: 1 !important;
   white-space: nowrap !important;
+}
+
+.it-user-email {
+  font-size: 10px !important;
+  color: #555 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+/* Avatar circular com iniciais */
+.it-header-avatar {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, var(--it-red) 0%, #b00410 100%) !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  border: 2px solid rgba(255,255,255,.1) !important;
+  letter-spacing: .5px !important;
+  flex-shrink: 0 !important;
+  user-select: none !important;
 }
 
 /* ================================================================
    LAYOUT PRINCIPAL
-   O elastic coloca #layout com position:absolute, top:0, left:0,
-   right:0, bottom:0. Empurramos para baixo do header.
    ================================================================ */
 #layout {
   top: var(--it-header-h) !important;
@@ -123,52 +161,30 @@
 
 /* ================================================================
    TASK MENU (#layout-menu)
-
-   HTML real:
-   <div id="layout-menu">
-     <div class="popover-header">...</div>
-     <div id="taskmenu" class="menu toolbar">
-       <span class="action-buttons">
-         <a class="compose">...</a>
-       </span>
-       <a class="mail selected">...</a>
-       <a class="contacts">...</a>
-       <a class="settings">...</a>
-       <span class="special-buttons">
-         <a class="settings">admin</a>
-         <a class="theme dark">...</a>
-         <a class="about">...</a>
-         <a class="logout">...</a>
-       </span>
-     </div>
-   </div>
    ================================================================ */
 #layout-menu {
   background: var(--it-menu-bg) !important;
   width: var(--it-menu-w) !important;
   min-width: var(--it-menu-w) !important;
   max-width: var(--it-menu-w) !important;
-  border-right: none !important;
+  border-right: 1px solid rgba(255,255,255,.04) !important;
   overflow: hidden !important;
-  /* Contexto de posicionamento para os .special-buttons absolutos */
   position: relative !important;
 }
 
-/* Esconde cabeçalho com logo original */
+/* Esconde cabeçalho original do elastic */
 #layout-menu .popover-header {
   display: none !important;
 }
 
-/* Container flex do menu
-   position:static para NÃO ser contexto dos .special-buttons absolutos —
-   quem os ancora é o #layout-menu acima */
+/* Flex column — position:static para .special-buttons absolutos
+   ficarem relativos ao #layout-menu (que tem position:relative) */
 #taskmenu {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  /* padding-bottom reserva espaço para os ~4 botões do special-buttons */
-  padding: 8px 0 175px !important;
-  gap: 0 !important;
+  padding: 8px 0 170px !important;
+  gap: 2px !important;
   height: 100% !important;
   width: 100% !important;
   box-sizing: border-box !important;
@@ -181,18 +197,11 @@
   flex-direction: column !important;
   align-items: center !important;
   width: 100% !important;
-  padding: 0 0 6px 0 !important;
+  padding: 0 0 8px 0 !important;
   flex-shrink: 0 !important;
 }
 
-/* Garante que o compose seja sempre visível */
-#taskmenu .action-buttons > a.compose {
-  display: flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* ---- Todos os links de navegação do menu ---- */
+/* ---- Todos os links de navegação ---- */
 #taskmenu > a,
 #taskmenu .action-buttons > a {
   display: flex !important;
@@ -201,16 +210,16 @@
   width: 38px !important;
   height: 38px !important;
   border-radius: 8px !important;
-  color: #666 !important;
+  color: #555 !important;
   text-decoration: none !important;
   transition: background .15s, color .15s !important;
   overflow: hidden !important;
   padding: 0 !important;
-  margin: 2px 0 !important;
+  margin: 1px 0 !important;
   flex-shrink: 0 !important;
 }
 
-/* ---- .inner: oculta texto, ícone ::before permanece ---- */
+/* ---- .inner: oculta texto, preserva ícone ::before ---- */
 #taskmenu > a .inner,
 #taskmenu .action-buttons > a .inner,
 #taskmenu .special-buttons > a .inner {
@@ -223,12 +232,12 @@
   color: transparent !important;
 }
 
-/* Restaura o ícone FontAwesome (::before no .inner) */
+/* Restaura ícone FontAwesome */
 #taskmenu > a .inner::before,
 #taskmenu .action-buttons > a .inner::before,
 #taskmenu .special-buttons > a .inner::before {
   font-size: 16px !important;
-  color: #666 !important;
+  color: #555 !important;
   line-height: 1 !important;
   display: block !important;
 }
@@ -237,7 +246,7 @@
 #taskmenu > a:hover,
 #taskmenu .action-buttons > a:hover,
 #taskmenu .special-buttons > a:hover {
-  background: rgba(255,255,255,.08) !important;
+  background: rgba(255,255,255,.07) !important;
 }
 #taskmenu > a:hover .inner::before,
 #taskmenu .action-buttons > a:hover .inner::before,
@@ -255,22 +264,34 @@
   color: #fff !important;
 }
 
-/* ---- BOTÃO COMPOR — sempre vermelho ---- */
+/* ---- BOTÃO COMPOR — vermelho com sombra ---- */
 #taskmenu .action-buttons > a.compose {
   background: var(--it-red) !important;
   box-shadow: 0 2px 8px rgba(227,6,19,.4) !important;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 #taskmenu .action-buttons > a.compose .inner::before {
   color: #fff !important;
 }
 #taskmenu .action-buttons > a.compose:hover {
   background: var(--it-red-dark) !important;
+  box-shadow: 0 2px 12px rgba(227,6,19,.5) !important;
 }
 
-/* ---- span.special-buttons ----
-   Mantemos position:absolute do elastic, mas agora âncora em #layout-menu
-   (que tem position:relative), não em #layout.
-   #taskmenu tem position:static para não interferir. ---- */
+/* Divisor visual no menu */
+#taskmenu .menu-divider,
+#taskmenu hr {
+  width: 24px !important;
+  height: 1px !important;
+  background: rgba(255,255,255,.06) !important;
+  border: none !important;
+  margin: 4px 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* ---- span.special-buttons — ancorado ao #layout-menu ---- */
 #taskmenu .special-buttons {
   position: absolute !important;
   bottom: 0 !important;
@@ -281,7 +302,7 @@
   flex-direction: column !important;
   align-items: center !important;
   padding: 0 0 8px !important;
-  gap: 0 !important;
+  gap: 2px !important;
   background: var(--it-menu-bg) !important;
 }
 
@@ -296,7 +317,7 @@
   text-decoration: none !important;
   transition: background .15s !important;
   overflow: hidden !important;
-  margin: 2px 0 !important;
+  margin: 1px 0 !important;
 }
 
 /* Logout hover vermelho */
@@ -313,29 +334,48 @@
 #layout-sidebar {
   background: var(--it-sidebar-bg) !important;
   border-right: 1px solid var(--it-border) !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
-#layout-sidebar .header {
-  background: var(--it-sidebar-bg) !important;
+/* Esconde header original — nosso JS injeta o label */
+#layout-sidebar > .header {
+  display: none !important;
+}
+
+/* Label de seção injetado pelo JS (ex: "PASTAS") */
+.it-section-label {
+  padding: 0 12px !important;
+  height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #aaa !important;
+  letter-spacing: 1.2px !important;
+  text-transform: uppercase !important;
   border-bottom: 1px solid var(--it-border) !important;
+  flex-shrink: 0 !important;
 }
 
-#layout-sidebar .header .username {
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  color: var(--it-gray) !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
+/* Lista de pastas */
+#mailboxlist {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  padding: 4px 0 !important;
 }
 
-/* Lista de pastas — <ul id="mailboxlist"> <li class="mailbox inbox selected"> <a> */
 #mailboxlist li > a {
-  padding-left: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 10px 0 9px !important;
+  height: 32px !important;
   border-left: 3px solid transparent !important;
-  font-size: 13px !important;
+  font-size: 12.5px !important;
   color: #555 !important;
   transition: background .1s, border-color .1s, color .1s !important;
+  gap: 8px !important;
+  text-decoration: none !important;
 }
 
 #mailboxlist li > a:hover {
@@ -344,7 +384,7 @@
   color: #333 !important;
 }
 
-/* li.selected ou li.focused = pasta ativa */
+/* Pasta ativa */
 #mailboxlist li.selected > a,
 #mailboxlist li.focused > a {
   background: var(--it-red-light) !important;
@@ -358,20 +398,54 @@
   background: var(--it-red) !important;
   color: #fff !important;
   border-radius: 10px !important;
-  font-size: 10px !important;
+  font-size: 9.5px !important;
   font-weight: 700 !important;
-  min-width: 18px !important;
-  height: 18px !important;
-  padding: 0 5px !important;
-  line-height: 18px !important;
+  min-width: 17px !important;
+  height: 17px !important;
+  padding: 0 4px !important;
+  line-height: 17px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-/* Rodapé quota */
+/* Footer sidebar: quota */
 #layout-sidebar .footer {
   background: var(--it-sidebar-bg) !important;
   border-top: 1px solid var(--it-border) !important;
+  padding: 10px 12px 12px !important;
+  flex-shrink: 0 !important;
+}
+
+.it-quota-inner {
+  display: block !important;
+}
+
+.it-stat-row {
+  display: flex !important;
+  justify-content: space-between !important;
   font-size: 11px !important;
-  color: var(--it-gray) !important;
+  color: #aaa !important;
+  margin-bottom: 5px !important;
+}
+
+.it-stat-val {
+  font-weight: 700 !important;
+  color: #444 !important;
+}
+
+.it-quota-bar {
+  height: 3px !important;
+  background: #e0e0e0 !important;
+  border-radius: 2px !important;
+  overflow: hidden !important;
+}
+
+.it-quota-fill {
+  height: 100% !important;
+  background: var(--it-red) !important;
+  border-radius: 2px !important;
+  transition: width .5s ease !important;
 }
 
 /* ================================================================
@@ -383,19 +457,56 @@
 }
 
 /* Header da lista */
-#messagelist-header {
+#messagelist-header,
+#layout-list .header {
   background: #fff !important;
   border-bottom: 1px solid var(--it-border) !important;
+  height: 42px !important;
+  padding: 0 10px 0 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #222 !important;
 }
 
-/* Linhas da tabela de mensagens */
+/* Caixa de busca */
+#layout-list .searchbar,
+#layout-list .search {
+  border-bottom: 1px solid var(--it-border) !important;
+  padding: 7px 10px !important;
+}
+
+#layout-list .searchbar input,
+#layout-list .search input,
+#layout-list #quicksearchbox {
+  background: #f5f5f5 !important;
+  border: 1px solid transparent !important;
+  border-radius: 6px !important;
+  padding: 5px 10px !important;
+  font-size: 12px !important;
+  color: #333 !important;
+  width: 100% !important;
+  outline: none !important;
+  transition: border-color .15s, background .15s !important;
+}
+
+#layout-list #quicksearchbox:focus {
+  border-color: var(--it-red) !important;
+  background: #fff !important;
+}
+
+/* ---- Linhas de mensagem ---- */
 #messagelist tr.message {
   border-left: 3px solid transparent !important;
+  border-bottom: 1px solid #f2f2f2 !important;
   transition: background .1s !important;
+  cursor: pointer !important;
 }
 
 #messagelist tr.message:hover {
-  background: #f7f7f7 !important;
+  background: #fafafa !important;
 }
 
 #messagelist tr.message.selected,
@@ -404,14 +515,57 @@
   border-left-color: var(--it-red) !important;
 }
 
-/* Mensagens não lidas (classe 'unread' na <tr>) */
+/* Não lidas */
 #messagelist tr.message.unread {
   border-left-color: var(--it-red) !important;
 }
 
-#messagelist tr.message.unread .subject a {
+#messagelist tr.message.unread td.sender {
   font-weight: 700 !important;
   color: #111 !important;
+}
+
+#messagelist tr.message.unread td.subject a {
+  font-weight: 600 !important;
+  color: #333 !important;
+}
+
+/* Células */
+#messagelist td {
+  font-size: 12px !important;
+  color: #555 !important;
+  vertical-align: middle !important;
+}
+
+#messagelist td.date {
+  font-size: 10px !important;
+  color: #ccc !important;
+  white-space: nowrap !important;
+}
+
+/* ---- Avatar na lista de mensagens (injetado pelo JS) ---- */
+.it-avatar {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  flex-shrink: 0 !important;
+  margin-right: 8px !important;
+  vertical-align: middle !important;
+  text-transform: uppercase !important;
+  letter-spacing: .3px !important;
+  user-select: none !important;
+}
+
+#messagelist td.sender {
+  display: flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
 }
 
 /* ================================================================
@@ -424,25 +578,65 @@
 #layout-content > .header {
   background: #fff !important;
   border-bottom: 1px solid var(--it-border) !important;
+  height: 42px !important;
+  padding: 0 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
 }
 
-/* Toolbar de ações (responder, encaminhar, etc.) */
-#toolbar-menu a.reply:not(.disabled),
-#toolbar-menu a.forward:not(.disabled) {
-  color: var(--it-red) !important;
-}
-
-/* ================================================================
-   BOTÕES GLOBAIS
-   ================================================================ */
-.btn-primary {
-  background-color: var(--it-red) !important;
+/* Botão Responder — vermelho preenchido */
+.btn-primary,
+a.reply.btn:not(.disabled),
+button.reply:not(:disabled) {
+  background: var(--it-red) !important;
   border-color: var(--it-red) !important;
+  color: #fff !important;
+  box-shadow: 0 1px 4px rgba(227,6,19,.25) !important;
 }
+
 .btn-primary:hover,
-.btn-primary:focus {
-  background-color: var(--it-red-dark) !important;
+a.reply.btn:hover:not(.disabled) {
+  background: var(--it-red-dark) !important;
   border-color: var(--it-red-dark) !important;
+  box-shadow: 0 2px 8px rgba(227,6,19,.3) !important;
+}
+
+/* Toolbar de ações */
+#layout-content .toolbar a,
+#layout-content .toolbar button {
+  border: 1px solid var(--it-border) !important;
+  background: #fff !important;
+  border-radius: 5px !important;
+  height: 28px !important;
+  padding: 0 11px !important;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  color: #555 !important;
+  transition: background .1s, border-color .1s !important;
+}
+
+#layout-content .toolbar a:hover,
+#layout-content .toolbar button:hover {
+  background: #f7f7f7 !important;
+  border-color: #ccc !important;
+}
+
+/* Cabeçalho do e-mail lido */
+#messageheader {
+  background: #fafafa !important;
+  border: 1px solid var(--it-border) !important;
+  border-radius: 8px !important;
+  padding: 14px 18px 16px !important;
+  margin: 16px 20px 16px !important;
+}
+
+#messageheader .subject {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #111 !important;
+  margin-bottom: 10px !important;
+  line-height: 1.3 !important;
 }
 
 /* ================================================================
@@ -480,53 +674,44 @@
 /* ================================================================
    DARK MODE
    ================================================================ */
-html.dark-mode #infratech-header {
-  background: #0d0d0d !important;
-}
-html.dark-mode #layout-menu {
-  background: #161616 !important;
-}
+html.dark-mode #infratech-header { background: #0d0d0d !important; }
+html.dark-mode #layout-menu { background: #161616 !important; }
+html.dark-mode #taskmenu .special-buttons { background: #161616 !important; }
+
 html.dark-mode #taskmenu > a .inner::before,
+html.dark-mode #taskmenu .action-buttons > a:not(.compose) .inner::before,
 html.dark-mode #taskmenu .special-buttons > a .inner::before {
   color: #444 !important;
 }
 html.dark-mode #taskmenu > a:hover .inner::before,
+html.dark-mode #taskmenu .action-buttons > a:not(.compose):hover .inner::before,
 html.dark-mode #taskmenu .special-buttons > a:hover .inner::before {
   color: #aaa !important;
 }
-html.dark-mode #layout-sidebar {
-  background: #1e1e1e !important;
-  border-right-color: #2a2a2a !important;
-}
-html.dark-mode #layout-sidebar .header {
-  background: #1e1e1e !important;
-  border-bottom-color: #2a2a2a !important;
-}
+
+html.dark-mode #layout-sidebar { background: #1e1e1e !important; border-right-color: #2a2a2a !important; }
+html.dark-mode #layout-sidebar > .header { background: #1e1e1e !important; border-bottom-color: #2a2a2a !important; }
+html.dark-mode .it-section-label { color: #444 !important; border-bottom-color: #2a2a2a !important; }
 html.dark-mode #mailboxlist li > a { color: #999 !important; }
 html.dark-mode #mailboxlist li > a:hover { background: #2a2a2a !important; }
-html.dark-mode #mailboxlist li.selected > a {
-  background: #2a0a0a !important;
-  color: #f57f7f !important;
-}
-html.dark-mode #layout-sidebar .footer {
-  background: #1e1e1e !important;
-  border-top-color: #2a2a2a !important;
-}
-html.dark-mode #layout-list {
-  background: #1e1e1e !important;
-  border-right-color: #2a2a2a !important;
-}
-html.dark-mode #messagelist-header {
-  background: #1e1e1e !important;
-  border-bottom-color: #2a2a2a !important;
-}
+html.dark-mode #mailboxlist li.selected > a { background: #2a0a0a !important; color: #f57f7f !important; }
+html.dark-mode #layout-sidebar .footer { background: #1e1e1e !important; border-top-color: #2a2a2a !important; }
+html.dark-mode .it-stat-row { color: #555 !important; }
+html.dark-mode .it-stat-val { color: #aaa !important; }
+html.dark-mode .it-quota-bar { background: #2a2a2a !important; }
+
+html.dark-mode #layout-list { background: #1e1e1e !important; border-right-color: #2a2a2a !important; }
+html.dark-mode #messagelist-header,
+html.dark-mode #layout-list .header { background: #1e1e1e !important; border-bottom-color: #2a2a2a !important; color: #ccc !important; }
+html.dark-mode #messagelist tr.message { border-bottom-color: #2a2a2a !important; }
 html.dark-mode #messagelist tr.message:hover { background: #2a2a2a !important; }
 html.dark-mode #messagelist tr.message.selected { background: #2a0a0a !important; }
+html.dark-mode #messagelist td { color: #999 !important; }
+
 html.dark-mode #layout-content { background: #1e1e1e !important; }
-html.dark-mode #layout-content > .header {
-  background: #1e1e1e !important;
-  border-bottom-color: #2a2a2a !important;
-}
+html.dark-mode #layout-content > .header { background: #1e1e1e !important; border-bottom-color: #2a2a2a !important; }
+html.dark-mode #messageheader { background: #1a1a1a !important; border-color: #2a2a2a !important; }
+html.dark-mode #messageheader .subject { color: #eee !important; }
 
 /* ================================================================
    SCROLLBARS
@@ -538,7 +723,7 @@ html.dark-mode #layout-content > .header {
 html.dark-mode ::-webkit-scrollbar-thumb { background: #3a3a3a; }
 
 /* ================================================================
-   RESIZE HANDLES (compose/reply)
+   RESIZE HANDLES
    ================================================================ */
 .it-compose-resize-handle {
   position: absolute !important;
@@ -561,6 +746,7 @@ html.dark-mode ::-webkit-scrollbar-thumb { background: #3a3a3a; }
   justify-content: center !important;
   border-top: 1px solid var(--it-border) !important;
   flex-shrink: 0 !important;
+  transition: background .12s !important;
 }
 .it-reply-resize-handle::after {
   content: '' !important;

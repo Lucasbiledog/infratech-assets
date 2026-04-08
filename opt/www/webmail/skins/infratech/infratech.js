@@ -7,12 +7,130 @@
   'use strict';
 
   /* ============================================================
+     PALETA DE CORES PARA AVATARES
+     ============================================================ */
+  var IT_COLORS = [
+    '#4f46e5', '#059669', '#d97706', '#7c3aed',
+    '#0891b2', '#be185d', '#1d4ed8', '#0f766e'
+  ];
+
+  function colorFrom(str) {
+    var h = 0;
+    for (var i = 0; i < str.length; i++) {
+      h = str.charCodeAt(i) + ((h << 5) - h);
+    }
+    return IT_COLORS[Math.abs(h) % IT_COLORS.length];
+  }
+
+  function initials(name) {
+    name = name.replace(/<[^>]+>/g, '').replace(/["']/g, '').trim();
+    var parts = name.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return name.slice(0, 2).toUpperCase();
+  }
+
+  /* ============================================================
+     AVATARES NA LISTA DE MENSAGENS
+     Para cada <tr class="message">, extrai o nome do remetente
+     e injeta um <span class="it-avatar"> no TD .sender
+     ============================================================ */
+  function initMessageAvatars() {
+    var rows = document.querySelectorAll('#messagelist tr.message');
+    rows.forEach(function (row) {
+      if (row.querySelector('.it-avatar')) return;
+      var senderTd = row.querySelector('td.sender');
+      if (!senderTd) return;
+      var nameEl = senderTd.querySelector('a') || senderTd;
+      var name = nameEl.textContent.trim();
+      if (!name) return;
+
+      var av = document.createElement('span');
+      av.className = 'it-avatar';
+      av.textContent = initials(name);
+      av.style.background = colorFrom(name);
+      senderTd.insertBefore(av, senderTd.firstChild);
+    });
+  }
+
+  /* ============================================================
+     AVATAR DO USUÁRIO NO HEADER
+     Extrai iniciais do e-mail do usuário logado e cria círculo
+     ============================================================ */
+  function initHeaderAvatar() {
+    var right = document.querySelector('#infratech-header .it-header-right');
+    if (!right || right.querySelector('.it-header-avatar')) return;
+    var emailEl = right.querySelector('.it-user-email');
+    if (!emailEl) return;
+
+    var username = emailEl.textContent.trim();
+    // Extrai nome da parte local do e-mail (antes do @)
+    var localPart = username.split('@')[0].replace(/[._-]/g, ' ');
+    var av = document.createElement('span');
+    av.className = 'it-header-avatar';
+    av.textContent = initials(localPart);
+    right.appendChild(av);
+  }
+
+  /* ============================================================
+     LABEL "PASTAS" NO SIDEBAR
+     Injeta label de seção acima da lista de pastas e
+     esconde o header original do elastic (duplica username)
+     ============================================================ */
+  function initSidebarLabel() {
+    var sidebar = document.getElementById('layout-sidebar');
+    if (!sidebar) return;
+
+    // Esconde o .header original (tem username + logout que já aparecem no nosso header)
+    var origHeader = sidebar.querySelector('.sidebar-header, .header');
+    if (origHeader) origHeader.style.display = 'none';
+
+    // Adiciona label de seção "PASTAS" antes do mailboxlist
+    var content = sidebar.querySelector('.content') || sidebar;
+    if (content.querySelector('.it-section-label')) return;
+    var lbl = document.createElement('div');
+    lbl.className = 'it-section-label';
+    lbl.textContent = 'Pastas';
+    content.insertBefore(lbl, content.firstChild);
+  }
+
+  /* ============================================================
+     QUOTA BAR NO FOOTER DO SIDEBAR
+     Usa os dados de quota do rcmail.env quando disponíveis
+     ============================================================ */
+  function initSidebarQuota() {
+    var sidebar = document.getElementById('layout-sidebar');
+    if (!sidebar) return;
+
+    var footer = sidebar.querySelector('.footer');
+    if (!footer) {
+      footer = document.createElement('div');
+      footer.className = 'footer';
+      sidebar.appendChild(footer);
+    }
+    if (footer.querySelector('.it-quota-inner')) return;
+
+    var pct = 0;
+    if (window.rcmail && rcmail.env && rcmail.env.quota) {
+      pct = Math.round(rcmail.env.quota.percent || 0);
+    }
+
+    var inner = document.createElement('div');
+    inner.className = 'it-quota-inner';
+    inner.innerHTML =
+      '<div class="it-stat-row">' +
+        '<span>Armazenamento</span>' +
+        '<span class="it-stat-val">' + pct + '%</span>' +
+      '</div>' +
+      '<div class="it-quota-bar">' +
+        '<div class="it-quota-fill" style="width:' + pct + '%"></div>' +
+      '</div>';
+    footer.insertBefore(inner, footer.firstChild);
+  }
+
+  /* ============================================================
      UTILIDADE: drag-resize genérico
-     handle    — elemento DOM que serve de alça
-     getSize   — função que retorna o tamanho atual (px)
-     setSize   — função que aplica o novo tamanho (px)
-     direction — 'up' (arrastar para cima aumenta) | 'down' (arrastar para baixo aumenta)
-     min/max   — limites em px
      ============================================================ */
   function makeDragResize(opts) {
     var handle    = opts.handle;
@@ -56,18 +174,14 @@
 
   /* ============================================================
      RESIZE — Janela de Compose flutuante
-     O Elastic usa #compose-content dentro de um popup/dialog.
-     Adicionamos uma alça no topo do container.
      ============================================================ */
   function initComposeResize() {
-    // Roundcube coloca o compose em #compose-content ou .popupmenu
     var compose = document.getElementById('compose-content')
                   || document.querySelector('.task-compose #layout-content');
 
     if (!compose) return;
-    if (compose.querySelector('.it-compose-resize-handle')) return; // já inicializado
+    if (compose.querySelector('.it-compose-resize-handle')) return;
 
-    // Garante position:relative no pai
     compose.style.position = 'relative';
 
     var handle = document.createElement('div');
@@ -86,11 +200,8 @@
 
   /* ============================================================
      RESIZE — Caixa de resposta inline (reply/forward)
-     O Roundcube renderiza o editor como <iframe> ou <div contenteditable>
-     dentro de #layout-content quando está em modo de composição.
      ============================================================ */
   function initReplyResize() {
-    // Tenta localizar o editor de reply (TinyMCE iframe ou textarea/div)
     var editors = [
       document.getElementById('composebody'),
       document.querySelector('#compose-content iframe'),
@@ -102,12 +213,11 @@
       if (!editor) return;
       var parent = editor.parentElement;
       if (!parent) return;
-      if (parent.querySelector('.it-reply-resize-handle')) return; // já existe
+      if (parent.querySelector('.it-reply-resize-handle')) return;
 
       var handle = document.createElement('div');
       handle.className = 'it-reply-resize-handle';
 
-      // Insere o handle imediatamente após o editor
       if (editor.nextSibling) {
         parent.insertBefore(handle, editor.nextSibling);
       } else {
@@ -130,43 +240,55 @@
 
   /* ============================================================
      INICIALIZAÇÃO
-     Roundcube carrega partes da UI de forma assíncrona,
-     então observamos mutações no DOM para pegar novos editores.
      ============================================================ */
   function init() {
+    initHeaderAvatar();
+    initSidebarLabel();
+    initSidebarQuota();
+    initMessageAvatars();
     initComposeResize();
     initReplyResize();
   }
 
-  // Executa na carga inicial
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
 
-  // Observa mudanças no DOM (compose aberto dinamicamente)
+  // Observa mutações para pegar elementos carregados dinamicamente
   if (window.MutationObserver) {
     var observer = new MutationObserver(function (mutations) {
       for (var i = 0; i < mutations.length; i++) {
         if (mutations[i].addedNodes.length > 0) {
+          initMessageAvatars();
           initComposeResize();
           initReplyResize();
           break;
         }
       }
     });
-
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
-  // Hook no evento do Roundcube de abertura de compose
   if (window.rcmail) {
     rcmail.addEventListener('init', function () {
       setTimeout(init, 300);
     });
     rcmail.addEventListener('insertrow', function () {
-      setTimeout(initReplyResize, 100);
+      setTimeout(function () {
+        initMessageAvatars();
+        initReplyResize();
+      }, 100);
+    });
+    // Atualiza a barra de quota quando o Roundcube recebe os dados
+    rcmail.addEventListener('setquota', function (p) {
+      var fill = document.querySelector('.it-quota-fill');
+      var val  = document.querySelector('.it-stat-val');
+      if (!fill || !p) return;
+      var pct = Math.round(p.percent || 0);
+      fill.style.width = pct + '%';
+      if (val) val.textContent = pct + '%';
     });
   }
 
