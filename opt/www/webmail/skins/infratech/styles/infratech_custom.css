@@ -704,13 +704,16 @@ a.reply.btn:hover:not(.disabled) {
   position: relative !important;
 }
 
-/* Logo dentro do card */
+/* Logo dentro do card — resetar position:relative;top:16vh do elastic */
 .task-login #logo {
   display: block !important;
+  position: static !important;
+  top: auto !important;
   margin: 0 auto 24px !important;
   max-height: 52px !important;
   max-width: 180px !important;
   object-fit: contain !important;
+  opacity: 1 !important;
 }
 
 /* Campos do formulário */
