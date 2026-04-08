@@ -116,6 +116,17 @@
       pct = Math.round(rcmail.env.quota.percent || 0);
     }
 
+    // Limpa qualquer conteúdo do elastic que aparece sem estilo
+    // (o elastic injeta span com "quota" inline)
+    var existingNodes = Array.prototype.slice.call(footer.childNodes);
+    existingNodes.forEach(function (node) {
+      // remove nós de texto soltos e spans sem classe it-
+      if (node.nodeType === 3 ||
+          (node.nodeType === 1 && !node.className.match(/it-/))) {
+        node.style && (node.style.display = 'none');
+      }
+    });
+
     var inner = document.createElement('div');
     inner.className = 'it-quota-inner';
     inner.innerHTML =
