@@ -1,9 +1,8 @@
 /* ================================================================
    INFRATECH ENGENHARIA — Custom Roundcube Theme
-   Base: Elastic skin
+   Seletores baseados no HTML real gerado pelo Roundcube/Elastic
    ================================================================ */
 
-/* ---- Design Tokens ---- */
 :root {
   --it-red:        #E30613;
   --it-red-dark:   #c00510;
@@ -16,11 +15,10 @@
   --it-border:     #e8e8e8;
   --it-header-h:   52px;
   --it-menu-w:     52px;
-  --it-sidebar-w:  200px;
 }
 
 /* ================================================================
-   HEADER INFRATECH (fixo no topo)
+   HEADER FIXO NO TOPO
    ================================================================ */
 #infratech-header {
   position: fixed !important;
@@ -32,18 +30,19 @@
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 0 16px 0 0 !important;
+  padding: 0 !important;
   z-index: 1050 !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,.4) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,.05), 0 2px 12px rgba(0,0,0,.5) !important;
 }
 
 .it-header-left {
   display: flex !important;
   align-items: center !important;
   height: 100% !important;
+  gap: 0 !important;
 }
 
-/* Bloco vermelho do logo, alinhado com a largura do menu */
+/* Bloco vermelho alinhado à largura do menu */
 .it-logo-block {
   width: var(--it-menu-w) !important;
   height: 100% !important;
@@ -52,23 +51,14 @@
   align-items: center !important;
   justify-content: center !important;
   flex-shrink: 0 !important;
-  overflow: hidden !important;
-  border-radius: 0 !important;
 }
 
-/* Esconde a imagem — usamos só o bloco vermelho com sigla */
-.it-logo-block img {
-  display: none !important;
-}
-
-/* Sigla IE sempre visível */
 .it-logo-initials {
-  display: flex !important;
   font-size: 15px !important;
   font-weight: 900 !important;
   color: #fff !important;
-  letter-spacing: -0.5px !important;
-  font-family: 'Roboto', sans-serif !important;
+  letter-spacing: -.5px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
 .it-brand-wrap {
@@ -76,26 +66,27 @@
   display: flex !important;
   flex-direction: column !important;
   gap: 3px !important;
+  border-left: 1px solid rgba(255,255,255,.07) !important;
+  height: 100% !important;
+  justify-content: center !important;
 }
 
 .it-brand-name {
   font-size: 13px !important;
   font-weight: 700 !important;
   color: #fff !important;
-  letter-spacing: 0.2px !important;
+  letter-spacing: .2px !important;
   line-height: 1 !important;
   white-space: nowrap !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
-/* "Infra" em vermelho */
-.it-brand-name span {
-  color: var(--it-red) !important;
-}
+.it-brand-name span { color: var(--it-red) !important; }
 
 .it-brand-sub {
   font-size: 9px !important;
   font-weight: 500 !important;
-  color: #555 !important;
+  color: #4a4a4a !important;
   letter-spacing: 1.5px !important;
   text-transform: uppercase !important;
   line-height: 1 !important;
@@ -105,30 +96,21 @@
 .it-header-right {
   display: flex !important;
   align-items: center !important;
-  gap: 10px !important;
+  padding-right: 16px !important;
   margin-left: auto !important;
-  padding-right: 4px !important;
 }
 
 .it-user-email {
-  color: #777 !important;
+  color: #666 !important;
   font-size: 12px !important;
   white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  max-width: 280px !important;
 }
 
 /* ================================================================
-   BODY / LAYOUT PRINCIPAL
-   Roundcube Elastic usa #layout com position:absolute preenchendo
-   100% da viewport. Empurramos para baixo do nosso header.
+   LAYOUT PRINCIPAL
+   O elastic coloca #layout com position:absolute, top:0, left:0,
+   right:0, bottom:0. Empurramos para baixo do header.
    ================================================================ */
-body {
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-}
-
-/* O #layout do elastic já tem position:absolute — só ajustamos top */
 #layout {
   top: var(--it-header-h) !important;
   height: calc(100% - var(--it-header-h)) !important;
@@ -140,13 +122,26 @@ body {
 }
 
 /* ================================================================
-   TASK MENU — barra lateral de ícones (52px)
+   TASK MENU (#layout-menu)
 
-   Elastic skin: botões são <a class="button compose/mail/...">
-     <span class="inner">Label</span></a>
-   Ícones vêm de ::before (FontAwesome) no .inner
-   Texto está no conteúdo do .inner (text node)
-   Special-buttons: position:absolute;bottom:0 no original
+   HTML real:
+   <div id="layout-menu">
+     <div class="popover-header">...</div>
+     <div id="taskmenu" class="menu toolbar">
+       <span class="action-buttons">
+         <a class="compose">...</a>
+       </span>
+       <a class="mail selected">...</a>
+       <a class="contacts">...</a>
+       <a class="settings">...</a>
+       <span class="special-buttons">
+         <a class="settings">admin</a>
+         <a class="theme dark">...</a>
+         <a class="about">...</a>
+         <a class="logout">...</a>
+       </span>
+     </div>
+   </div>
    ================================================================ */
 #layout-menu {
   background: var(--it-menu-bg) !important;
@@ -155,9 +150,6 @@ body {
   max-width: var(--it-menu-w) !important;
   border-right: none !important;
   overflow: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
-  position: relative !important;
 }
 
 /* Esconde cabeçalho com logo original */
@@ -165,107 +157,109 @@ body {
   display: none !important;
 }
 
-/* Container principal do menu */
+/* Container flex do menu */
 #taskmenu {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding: 8px 0 6px !important;
-  gap: 3px !important;
-  flex: 1 !important;
-  overflow: hidden !important;
+  padding: 8px 0 !important;
+  gap: 0 !important;
+  height: 100% !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  position: static !important;
-}
-
-/* Todos os botões de navegação */
-#taskmenu a {
+  /* Importante: o elastic usa position:relative no taskmenu */
   position: relative !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 38px !important;
-  height: 38px !important;
-  min-height: 38px !important;
-  max-height: 38px !important;
-  border-radius: 8px !important;
-  color: #777 !important;
-  text-decoration: none !important;
-  transition: background 0.15s, color 0.15s !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  flex-shrink: 0 !important;
 }
 
-/* .inner: esconde o texto, mantém o ícone ::before */
-#taskmenu a .inner {
-  position: relative !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 38px !important;
-  height: 38px !important;
-  /* Esconde o texto do nó filho */
-  font-size: 0 !important;
-  color: transparent !important;
-  line-height: 0 !important;
-}
-
-/* Restaura ícone FontAwesome */
-#taskmenu a .inner::before {
-  font-size: 17px !important;
-  line-height: 1 !important;
-  color: inherit !important;
-  display: block !important;
-}
-
-/* Hover estado */
-#taskmenu a:hover {
-  background: rgba(255,255,255,.07) !important;
-  color: #bbb !important;
-}
-
-/* Estado ativo */
-#taskmenu a.selected,
-#taskmenu a.active {
-  background: var(--it-red) !important;
-  color: #fff !important;
-}
-#taskmenu a.selected .inner::before,
-#taskmenu a.active .inner::before {
-  color: #fff !important;
-}
-
-/* ---- Botão COMPOR — sempre vermelho ---- */
-#taskmenu a.compose {
-  background: var(--it-red) !important;
-  color: #fff !important;
-  box-shadow: 0 2px 8px rgba(227,6,19,.4) !important;
-  margin-bottom: 6px !important;
-}
-#taskmenu a.compose .inner::before {
-  color: #fff !important;
-}
-#taskmenu a.compose:hover {
-  background: var(--it-red-dark) !important;
-  box-shadow: 0 3px 12px rgba(227,6,19,.5) !important;
-}
-
-/* Bloco action-buttons (contém o compose) */
+/* ---- span.action-buttons (contém o compose) ---- */
 #taskmenu .action-buttons {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   width: 100% !important;
+  padding: 0 0 6px 0 !important;
   flex-shrink: 0 !important;
-  padding-top: 2px !important;
 }
 
-/* ---- Special buttons (config, dark, about, logout) ----
-   No elastic original: position:absolute; bottom:0; left:0; right:0
-   Aqui: removemos o absolute e usamos margin-top:auto para empurrar
-   ao fundo dentro do flex column */
+/* ---- Todos os links de navegação do menu ---- */
+#taskmenu > a,
+#taskmenu .action-buttons > a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 8px !important;
+  color: #666 !important;
+  text-decoration: none !important;
+  transition: background .15s, color .15s !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 2px 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* ---- .inner: oculta texto, ícone ::before permanece ---- */
+#taskmenu > a .inner,
+#taskmenu .action-buttons > a .inner,
+#taskmenu .special-buttons > a .inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 0 !important;
+  color: transparent !important;
+}
+
+/* Restaura o ícone FontAwesome (::before no .inner) */
+#taskmenu > a .inner::before,
+#taskmenu .action-buttons > a .inner::before,
+#taskmenu .special-buttons > a .inner::before {
+  font-size: 16px !important;
+  color: #666 !important;
+  line-height: 1 !important;
+  display: block !important;
+}
+
+/* Hover */
+#taskmenu > a:hover,
+#taskmenu .action-buttons > a:hover,
+#taskmenu .special-buttons > a:hover {
+  background: rgba(255,255,255,.08) !important;
+}
+#taskmenu > a:hover .inner::before,
+#taskmenu .action-buttons > a:hover .inner::before,
+#taskmenu .special-buttons > a:hover .inner::before {
+  color: #ccc !important;
+}
+
+/* Ativo/selecionado */
+#taskmenu > a.selected,
+#taskmenu > a.active {
+  background: var(--it-red) !important;
+}
+#taskmenu > a.selected .inner::before,
+#taskmenu > a.active .inner::before {
+  color: #fff !important;
+}
+
+/* ---- BOTÃO COMPOR — sempre vermelho ---- */
+#taskmenu .action-buttons > a.compose {
+  background: var(--it-red) !important;
+  box-shadow: 0 2px 8px rgba(227,6,19,.4) !important;
+}
+#taskmenu .action-buttons > a.compose .inner::before {
+  color: #fff !important;
+}
+#taskmenu .action-buttons > a.compose:hover {
+  background: var(--it-red-dark) !important;
+}
+
+/* ---- span.special-buttons ----
+   O elastic original usa:
+   .special-buttons { position:absolute; bottom:0; left:0; right:0; }
+   Sobrescrevemos para position:static e margin-top:auto ----*/
 #taskmenu .special-buttons {
   position: static !important;
   bottom: auto !important;
@@ -276,24 +270,37 @@ body {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  gap: 3px !important;
   padding-bottom: 8px !important;
+  gap: 0 !important;
   flex-shrink: 0 !important;
 }
 
-/* Logout */
-#taskmenu a.logout:hover {
+/* Botões dentro do special-buttons */
+#taskmenu .special-buttons > a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  transition: background .15s !important;
+  overflow: hidden !important;
+  margin: 2px 0 !important;
+}
+
+/* Logout hover vermelho */
+#taskmenu .special-buttons > a.logout:hover {
   background: rgba(227,6,19,.15) !important;
+}
+#taskmenu .special-buttons > a.logout:hover .inner::before {
   color: var(--it-red) !important;
 }
 
 /* ================================================================
-   FOLDER SIDEBAR (200px)
+   FOLDER SIDEBAR
    ================================================================ */
 #layout-sidebar {
-  width: var(--it-sidebar-w) !important;
-  min-width: var(--it-sidebar-w) !important;
-  max-width: var(--it-sidebar-w) !important;
   background: var(--it-sidebar-bg) !important;
   border-right: 1px solid var(--it-border) !important;
 }
@@ -301,8 +308,6 @@ body {
 #layout-sidebar .header {
   background: var(--it-sidebar-bg) !important;
   border-bottom: 1px solid var(--it-border) !important;
-  font-size: 11px !important;
-  color: var(--it-gray) !important;
 }
 
 #layout-sidebar .header .username {
@@ -312,28 +317,24 @@ body {
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  max-width: 140px !important;
 }
 
-/* Lista de pastas */
-#mailboxlist {
-  font-size: 13px !important;
-}
-
+/* Lista de pastas — <ul id="mailboxlist"> <li class="mailbox inbox selected"> <a> */
 #mailboxlist li > a {
   padding-left: 12px !important;
   border-left: 3px solid transparent !important;
+  font-size: 13px !important;
   color: #555 !important;
-  font-size: 12.5px !important;
-  transition: background 0.1s, border-color 0.1s !important;
+  transition: background .1s, border-color .1s, color .1s !important;
 }
 
 #mailboxlist li > a:hover {
   background: #f0f0f0 !important;
   border-left-color: #ccc !important;
+  color: #333 !important;
 }
 
-/* Pasta ativa */
+/* li.selected ou li.focused = pasta ativa */
 #mailboxlist li.selected > a,
 #mailboxlist li.focused > a {
   background: var(--it-red-light) !important;
@@ -352,94 +353,86 @@ body {
   min-width: 18px !important;
   height: 18px !important;
   padding: 0 5px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: 1 !important;
+  line-height: 18px !important;
 }
 
-/* Rodapé da sidebar (quota) */
+/* Rodapé quota */
 #layout-sidebar .footer {
   background: var(--it-sidebar-bg) !important;
   border-top: 1px solid var(--it-border) !important;
   font-size: 11px !important;
-  padding: 8px 12px !important;
   color: var(--it-gray) !important;
 }
 
 /* ================================================================
-   LISTA DE EMAILS
+   LISTA DE MENSAGENS
    ================================================================ */
 #layout-list {
   background: #fff !important;
   border-right: 1px solid var(--it-border) !important;
 }
 
-#layout-list .header,
+/* Header da lista */
 #messagelist-header {
   background: #fff !important;
   border-bottom: 1px solid var(--it-border) !important;
 }
 
-/* Linhas da lista */
-#messagelist tr {
+/* Linhas da tabela de mensagens */
+#messagelist tr.message {
   border-left: 3px solid transparent !important;
-  transition: background 0.1s !important;
+  transition: background .1s !important;
 }
 
-#messagelist tr.unread {
+#messagelist tr.message:hover {
+  background: #f7f7f7 !important;
+}
+
+#messagelist tr.message.selected,
+#messagelist tr.message.focused {
+  background: var(--it-red-light) !important;
   border-left-color: var(--it-red) !important;
 }
 
-#messagelist tr.unread .subject a,
-#messagelist tr.unread td.from {
+/* Mensagens não lidas (classe 'unread' na <tr>) */
+#messagelist tr.message.unread {
+  border-left-color: var(--it-red) !important;
+}
+
+#messagelist tr.message.unread .subject a {
   font-weight: 700 !important;
   color: #111 !important;
 }
 
-#messagelist tr:hover {
-  background: #f7f7f7 !important;
-}
-
-#messagelist tr.selected {
-  background: var(--it-red-light) !important;
-}
-
 /* ================================================================
-   PAINEL DE CONTEÚDO (leitura de email)
+   PAINEL DE CONTEÚDO / LEITURA
    ================================================================ */
 #layout-content {
   background: #fff !important;
 }
 
-#layout-content .header {
+#layout-content > .header {
   background: #fff !important;
   border-bottom: 1px solid var(--it-border) !important;
 }
 
-/* ================================================================
-   BOTÕES & TOOLBAR
-   ================================================================ */
-.btn-primary,
-button.btn-primary,
-a.btn-primary {
-  background-color: var(--it-red) !important;
-  border-color: var(--it-red) !important;
-  color: #fff !important;
+/* Toolbar de ações (responder, encaminhar, etc.) */
+#toolbar-menu a.reply:not(.disabled),
+#toolbar-menu a.forward:not(.disabled) {
+  color: var(--it-red) !important;
 }
 
+/* ================================================================
+   BOTÕES GLOBAIS
+   ================================================================ */
+.btn-primary {
+  background-color: var(--it-red) !important;
+  border-color: var(--it-red) !important;
+}
 .btn-primary:hover,
 .btn-primary:focus {
   background-color: var(--it-red-dark) !important;
   border-color: var(--it-red-dark) !important;
-}
-
-/* Botão Responder / Encaminhar */
-#toolbar-menu a.reply,
-#toolbar-menu a.forward,
-.toolbar a.reply,
-.toolbar a.forward {
-  color: var(--it-red) !important;
 }
 
 /* ================================================================
@@ -467,12 +460,11 @@ a.btn-primary {
   box-shadow: 0 12px 40px rgba(0,0,0,.45) !important;
   min-width: 340px !important;
   max-width: 400px !important;
-  width: 100% !important;
 }
 
 .task-login .form-control:focus {
   border-color: var(--it-red) !important;
-  box-shadow: 0 0 0 0.15rem rgba(227,6,19,.15) !important;
+  box-shadow: 0 0 0 .15rem rgba(227,6,19,.15) !important;
 }
 
 /* ================================================================
@@ -481,72 +473,47 @@ a.btn-primary {
 html.dark-mode #infratech-header {
   background: #0d0d0d !important;
 }
-
 html.dark-mode #layout-menu {
   background: #161616 !important;
 }
-
-html.dark-mode #taskmenu a {
+html.dark-mode #taskmenu > a .inner::before,
+html.dark-mode #taskmenu .special-buttons > a .inner::before {
   color: #444 !important;
 }
-
-html.dark-mode #taskmenu a:hover {
-  background: rgba(255,255,255,.06) !important;
+html.dark-mode #taskmenu > a:hover .inner::before,
+html.dark-mode #taskmenu .special-buttons > a:hover .inner::before {
   color: #aaa !important;
 }
-
 html.dark-mode #layout-sidebar {
   background: #1e1e1e !important;
   border-right-color: #2a2a2a !important;
 }
-
 html.dark-mode #layout-sidebar .header {
   background: #1e1e1e !important;
   border-bottom-color: #2a2a2a !important;
 }
-
-html.dark-mode #mailboxlist li > a {
-  color: #999 !important;
-}
-
-html.dark-mode #mailboxlist li > a:hover {
-  background: #2a2a2a !important;
-}
-
+html.dark-mode #mailboxlist li > a { color: #999 !important; }
+html.dark-mode #mailboxlist li > a:hover { background: #2a2a2a !important; }
 html.dark-mode #mailboxlist li.selected > a {
   background: #2a0a0a !important;
   color: #f57f7f !important;
 }
-
 html.dark-mode #layout-sidebar .footer {
   background: #1e1e1e !important;
   border-top-color: #2a2a2a !important;
 }
-
 html.dark-mode #layout-list {
   background: #1e1e1e !important;
   border-right-color: #2a2a2a !important;
 }
-
-html.dark-mode #layout-list .header,
 html.dark-mode #messagelist-header {
   background: #1e1e1e !important;
   border-bottom-color: #2a2a2a !important;
 }
-
-html.dark-mode #messagelist tr:hover {
-  background: #2a2a2a !important;
-}
-
-html.dark-mode #messagelist tr.selected {
-  background: #2a0a0a !important;
-}
-
-html.dark-mode #layout-content {
-  background: #1e1e1e !important;
-}
-
-html.dark-mode #layout-content .header {
+html.dark-mode #messagelist tr.message:hover { background: #2a2a2a !important; }
+html.dark-mode #messagelist tr.message.selected { background: #2a0a0a !important; }
+html.dark-mode #layout-content { background: #1e1e1e !important; }
+html.dark-mode #layout-content > .header {
   background: #1e1e1e !important;
   border-bottom-color: #2a2a2a !important;
 }
@@ -554,28 +521,22 @@ html.dark-mode #layout-content .header {
 /* ================================================================
    SCROLLBARS
    ================================================================ */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
+::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--it-gray); }
 html.dark-mode ::-webkit-scrollbar-thumb { background: #3a3a3a; }
 
 /* ================================================================
-   COMPOSE / RESIZE HANDLES
+   RESIZE HANDLES (compose/reply)
    ================================================================ */
 .it-compose-resize-handle {
   position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
+  top: 0 !important; left: 0 !important; right: 0 !important;
   height: 5px !important;
   cursor: ns-resize !important;
   z-index: 10 !important;
   border-radius: 10px 10px 0 0 !important;
-  transition: background .12s !important;
 }
 .it-compose-resize-handle:hover,
 .it-compose-resize-handle.it-dragging {
@@ -584,19 +545,16 @@ html.dark-mode ::-webkit-scrollbar-thumb { background: #3a3a3a; }
 
 .it-reply-resize-handle {
   height: 6px !important;
-  background: transparent !important;
   cursor: ns-resize !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   border-top: 1px solid var(--it-border) !important;
-  transition: background .12s !important;
   flex-shrink: 0 !important;
 }
 .it-reply-resize-handle::after {
   content: '' !important;
-  width: 32px !important;
-  height: 3px !important;
+  width: 32px !important; height: 3px !important;
   border-radius: 2px !important;
   background: #d0d0d0 !important;
 }
@@ -607,17 +565,4 @@ html.dark-mode ::-webkit-scrollbar-thumb { background: #3a3a3a; }
 .it-reply-resize-handle:hover::after,
 .it-reply-resize-handle.it-dragging::after {
   background: var(--it-red) !important;
-}
-
-/* ================================================================
-   RESPONSIVE
-   ================================================================ */
-@media (max-width: 768px) {
-  .it-brand-wrap,
-  .it-header-right { display: none !important; }
-  #infratech-header { padding: 0 !important; }
-  #layout-menu {
-    width: 44px !important;
-    min-width: 44px !important;
-  }
 }
