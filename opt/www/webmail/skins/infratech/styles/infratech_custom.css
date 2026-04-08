@@ -774,122 +774,123 @@ html.dark-mode ::-webkit-scrollbar-thumb { background: #3a3a3a; }
 }
 
 /* ================================================================
-   RESPONSIVIDADE
-   O elastic já tem sistema responsivo próprio. Aqui ajustamos
-   apenas o que mudamos com nosso tema customizado.
+   RESPONSIVIDADE — Mapeamento dos painéis reais do Roundcube:
+   #layout-menu    = sidebar de navegação (ícones, 52px)
+   #layout-sidebar = sidebar de pastas   (200px)
+   #layout-list    = lista de emails
+   #layout-content = visualização do email
    ================================================================ */
 
-/* ---- Tablet largo (< 1200px): sidebar de pastas mais estreita ---- */
-@media (max-width: 1199px) {
-  #layout-sidebar {
-    min-width: 170px !important;
-    width: 170px !important;
-  }
+/* --- Base: garante flex correto e sem overflow --- */
+#layout {
+  display: flex !important;
+  flex-direction: row !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
-/* ---- Tablet (< 960px): esconde sidebar de pastas por padrão,
-   o elastic mostra via botão burger ---- */
-@media (max-width: 959px) {
-  /* O elastic usa a classe .sidebar-visible no #layout para mostrar o sidebar */
-  #layout:not(.sidebar-visible) #layout-sidebar {
-    display: none !important;
-  }
-
-  #layout-menu {
-    width: var(--it-menu-w) !important;
-  }
-
-  /* Header: esconde subtitle */
-  .it-brand-sub {
-    display: none !important;
-  }
+#layout-menu,
+#layout-sidebar,
+#layout-list,
+#layout-content {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
 }
 
-/* ---- Mobile (< 768px): layout de coluna única ---- */
-@media (max-width: 767px) {
+/* --- Desktop (> 900px): todos os painéis visíveis --- */
+@media (min-width: 901px) {
+  #layout-menu    { width: var(--it-menu-w) !important; flex-shrink: 0 !important; }
+  #layout-sidebar { width: 200px !important; flex-shrink: 0 !important; }
+  #layout-list    { width: 260px !important; flex-shrink: 0 !important; }
+  #layout-content { flex: 1 !important; }
+}
+
+/* --- Tablet (560px – 900px): 3 painéis, sem sidebar de pastas --- */
+@media (max-width: 900px) {
+  #layout-menu    { width: var(--it-menu-w) !important; flex-shrink: 0 !important; }
+  #layout-sidebar { width: 180px !important; flex-shrink: 0 !important; display: flex !important; }
+  #layout-list    { width: 220px !important; flex-shrink: 0 !important; }
+  #layout-content { flex: 1 !important; }
+
+  /* Esconde subtitle no header */
+  .it-brand-sub { display: none !important; }
+}
+
+@media (max-width: 700px) {
+  /* Sidebar de pastas some — navegar por pasta via burger do elastic */
+  #layout-sidebar { display: none !important; }
+  #layout-list    { width: 220px !important; flex-shrink: 0 !important; }
+}
+
+/* --- Mobile (< 560px): navegação em stack por painéis --- */
+@media (max-width: 560px) {
   :root {
     --it-header-h: 48px;
-    --it-menu-w:   44px;
+    --it-menu-w:   0px;
   }
 
-  /* Logo block proporcional */
-  .it-logo-block {
-    width: var(--it-menu-w) !important;
-  }
+  /* Esconde menus laterais */
+  #layout-menu    { display: none !important; }
+  #layout-sidebar { display: none !important; }
 
-  /* Header: esconde nome da empresa, só logo */
-  .it-brand-wrap {
-    display: none !important;
+  /* Estado padrão: só a lista */
+  #layout-list {
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
-
-  /* Avatar menor */
-  .it-header-avatar {
-    width: 26px !important;
-    height: 26px !important;
-    font-size: 10px !important;
-  }
-
-  /* Ícones do menu menores */
-  #taskmenu > a,
-  #taskmenu .action-buttons > a,
-  #taskmenu .special-buttons > a {
-    width: 34px !important;
-    height: 34px !important;
-  }
-
-  #taskmenu > a .inner,
-  #taskmenu .action-buttons > a .inner,
-  #taskmenu .special-buttons > a .inner {
-    width: 34px !important;
-    height: 34px !important;
-  }
-
-  /* Sidebar de pastas sobreposta (overlay) em mobile */
-  #layout-sidebar {
-    position: absolute !important;
-    left: var(--it-menu-w) !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    z-index: 500 !important;
-    box-shadow: 2px 0 12px rgba(0,0,0,.18) !important;
-  }
-
-  #layout:not(.sidebar-visible) #layout-sidebar {
-    display: none !important;
-  }
-}
-
-/* ---- Telas muito pequenas (< 480px) ---- */
-@media (max-width: 479px) {
-  /* Esconde a lista de mensagens quando email está aberto */
-  #layout.mail-content-visible #layout-list {
-    display: none !important;
-  }
-
   #layout-content {
-    min-width: 0 !important;
+    display: none !important;
+    width: 100% !important;
+  }
+
+  /* Estado view-open: email aberto em tela cheia */
+  #layout.it-view-open #layout-list    { display: none !important; }
+  #layout.it-view-open #layout-content {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+  }
+
+  /* Header compacto */
+  .it-logo-block { display: none !important; }
+  .it-brand-wrap { padding-left: 12px !important; border-left: none !important; }
+  .it-brand-sub  { display: none !important; }
+  .it-header-avatar { width: 26px !important; height: 26px !important; font-size: 10px !important; }
+}
+
+/* --- Botão "← Voltar" — só visível em mobile quando email aberto --- */
+#it-back-btn {
+  display: none !important;
+  align-items: center !important;
+  gap: 5px !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--it-red) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  padding: 0 10px 0 4px !important;
+  height: 100% !important;
+  flex-shrink: 0 !important;
+}
+
+#it-back-btn::before {
+  content: '←' !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 560px) {
+  #layout.it-view-open #it-back-btn {
+    display: flex !important;
   }
 }
 
-/* ---- Elastic classes responsivas ---- */
-
-/* Quando o elastic aplica layout-phone */
-body.layout-phone #infratech-header .it-brand-wrap,
-body.phone #infratech-header .it-brand-wrap {
-  display: none !important;
-}
-
-body.layout-phone #layout-sidebar,
-body.phone #layout-sidebar {
-  position: absolute !important;
-  z-index: 500 !important;
-  left: var(--it-menu-w) !important;
-  top: 0 !important; bottom: 0 !important;
-  box-shadow: 2px 0 12px rgba(0,0,0,.18) !important;
-}
-
-/* Garante que o layout ocupa 100% em qualquer tela */
-#layout, body, html {
+/* --- Overflow global --- */
+html, body {
   max-width: 100% !important;
   overflow-x: hidden !important;
 }

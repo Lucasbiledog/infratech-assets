@@ -250,6 +250,63 @@
   }
 
   /* ============================================================
+     RESPONSIVIDADE MOBILE — classe it-view-open no #layout
+     Controla stack de painéis em telas < 560px
+     ============================================================ */
+
+  function isMobile() {
+    return window.innerWidth <= 560;
+  }
+
+  /* Injeta o botão "← Voltar" no header do #layout-content */
+  function initBackButton() {
+    var contentHeader = document.querySelector('#layout-content > .header');
+    if (!contentHeader || contentHeader.querySelector('#it-back-btn')) return;
+
+    var btn = document.createElement('button');
+    btn.id = 'it-back-btn';
+    btn.setAttribute('aria-label', 'Voltar para lista');
+    btn.textContent = 'Voltar';
+
+    btn.addEventListener('click', function () {
+      var layout = document.getElementById('layout');
+      if (layout) layout.classList.remove('it-view-open');
+    });
+
+    contentHeader.insertBefore(btn, contentHeader.firstChild);
+  }
+
+  /* Abre o painel de visualização em mobile */
+  function openView() {
+    if (!isMobile()) return;
+    var layout = document.getElementById('layout');
+    if (layout) layout.classList.add('it-view-open');
+  }
+
+  /* Fecha o painel de visualização em mobile (volta para lista) */
+  function closeView() {
+    var layout = document.getElementById('layout');
+    if (layout) layout.classList.remove('it-view-open');
+  }
+
+  /* Hookeia cliques em linhas da lista de mensagens */
+  function initMessageListClick() {
+    var list = document.getElementById('messagelist');
+    if (!list || list.dataset.itClick) return;
+    list.dataset.itClick = '1';
+
+    list.addEventListener('click', function (e) {
+      var row = e.target.closest('tr.message');
+      if (row) openView();
+    });
+  }
+
+  /* Reseta estado ao redimensionar acima do breakpoint mobile */
+  window.addEventListener('resize', function () {
+    if (!isMobile()) closeView();
+  });
+
+  /* ============================================================
      INICIALIZAÇÃO
      ============================================================ */
   function init() {
@@ -257,6 +314,8 @@
     initSidebarLabel();
     initSidebarQuota();
     initMessageAvatars();
+    initBackButton();
+    initMessageListClick();
     initComposeResize();
     initReplyResize();
   }
@@ -273,6 +332,8 @@
       for (var i = 0; i < mutations.length; i++) {
         if (mutations[i].addedNodes.length > 0) {
           initMessageAvatars();
+          initBackButton();
+          initMessageListClick();
           initComposeResize();
           initReplyResize();
           break;
@@ -289,8 +350,13 @@
     rcmail.addEventListener('insertrow', function () {
       setTimeout(function () {
         initMessageAvatars();
+        initMessageListClick();
         initReplyResize();
       }, 100);
+    });
+    // Mensagem selecionada via teclado ou API do Roundcube
+    rcmail.addEventListener('afterpreview', function () {
+      openView();
     });
     // Atualiza a barra de quota quando o Roundcube recebe os dados
     rcmail.addEventListener('setquota', function (p) {
