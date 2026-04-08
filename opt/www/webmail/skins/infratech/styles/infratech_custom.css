@@ -5,129 +5,140 @@
 
 /* ---- Design Tokens ---- */
 :root {
-  --it-red:            #E30613;
-  --it-red-dark:       #c00510;
-  --it-red-light:      #fff5f5;
-  --it-gray:           #6D6E71;
-  --it-green:          #00A650;
-  --it-header-bg:      #1a1a1a;
-  --it-menu-bg:        #2a2a2a;
-  --it-sidebar-bg:     #fafafa;
-  --it-header-h:       52px;
-  --it-menu-w:         52px;
-  --it-sidebar-w:      200px;
-  --it-border:         #e8e8e8;
+  --it-red:        #E30613;
+  --it-red-dark:   #c00510;
+  --it-red-light:  #fff5f5;
+  --it-gray:       #6D6E71;
+  --it-green:      #00A650;
+  --it-header-bg:  #1a1a1a;
+  --it-menu-bg:    #222222;
+  --it-sidebar-bg: #f8f8f8;
+  --it-border:     #e8e8e8;
+  --it-header-h:   52px;
+  --it-menu-w:     52px;
+  --it-sidebar-w:  200px;
 }
 
 /* ================================================================
-   GLOBAL RESETS
-   ================================================================ */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-/* ================================================================
-   INFRATECH HEADER (fixed top bar)
+   HEADER INFRATECH (fixo no topo)
    ================================================================ */
 #infratech-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--it-header-h);
-  background: var(--it-header-bg);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  z-index: 1050;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-  flex-shrink: 0;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--it-header-h) !important;
+  background: var(--it-header-bg) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 16px 0 0 !important;
+  z-index: 1050 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.4) !important;
 }
 
 .it-header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
 }
 
-.it-logo {
-  height: 34px;
-  width: auto;
-  object-fit: contain;
-  display: block;
+/* Bloco vermelho do logo, alinhado com a largura do menu */
+.it-logo-block {
+  width: var(--it-menu-w) !important;
+  height: 100% !important;
+  background: var(--it-red) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
 }
 
-.it-brand {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
+.it-logo-block img {
+  height: 28px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  filter: brightness(0) invert(1) !important; /* logo branco */
+}
+
+/* Fallback se não tiver logo: sigla */
+.it-logo-initials {
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  color: #fff !important;
+  letter-spacing: -0.5px !important;
+}
+
+.it-brand-wrap {
+  padding: 0 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
 }
 
 .it-brand-name {
-  color: var(--it-red);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  margin-bottom: 2px;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  letter-spacing: 0.2px !important;
+  line-height: 1 !important;
 }
 
+.it-brand-name span { color: var(--it-red) !important; }
+
 .it-brand-sub {
-  color: #888;
-  font-size: 9px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  font-size: 9px !important;
+  font-weight: 500 !important;
+  color: #555 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
 }
 
 .it-header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
 }
 
 .it-user-email {
-  color: #aaa;
-  font-size: 12px;
-  letter-spacing: 0.2px;
-}
-
-.it-header-dot {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--it-red);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-  cursor: pointer;
-  flex-shrink: 0;
+  color: #888 !important;
+  font-size: 12px !important;
 }
 
 /* ================================================================
-   BODY & MAIN LAYOUT
+   BODY / LAYOUT PRINCIPAL
+   Roundcube Elastic usa #layout com position:absolute preenchendo
+   100% da viewport. Empurramos para baixo do nosso header.
    ================================================================ */
 body {
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
-/* Empurra o #layout para baixo do nosso header fixo */
+/* O #layout do elastic já tem position:absolute — só ajustamos top */
 #layout {
   top: var(--it-header-h) !important;
   height: calc(100% - var(--it-header-h)) !important;
 }
 
-/* print layout não deve ser afetado */
 #print-layout {
   top: 0 !important;
   height: 100% !important;
 }
 
 /* ================================================================
-   TASK MENU — thin icon sidebar
+   TASK MENU — barra de ícones fina (52px)
+
+   COMO FUNCIONA O ELASTIC:
+   - Botões são <a class="button mail"><span class="inner">Email</span></a>
+   - O ÍCONE vem do CSS ::before (FontAwesome) aplicado em .inner
+   - O TEXTO está dentro do <span class="inner">
+   - Special-buttons usa position:absolute;bottom:0 no elastic
+
+   ESTRATÉGIA:
+   - font-size:0 em .inner oculta o texto
+   - ::before mantém font-size normal (ícone visível)
+   - Substituímos position:absolute dos special-buttons por relative
    ================================================================ */
 #layout-menu {
   background: var(--it-menu-bg) !important;
@@ -135,78 +146,72 @@ body {
   min-width: var(--it-menu-w) !important;
   max-width: var(--it-menu-w) !important;
   border-right: none !important;
-  overflow: hidden !important;  /* CRÍTICO: impede special-buttons de vazar */
-  position: relative !important;
-  z-index: 10 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
-/* Esconde logo do menu — temos logo no header */
+/* Esconde o cabeçalho do popover (logo original) */
 #layout-menu .popover-header {
   display: none !important;
 }
 
-/* Task nav container */
+/* Container do menu de tarefas */
 #taskmenu {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding: 6px 0 !important;
+  padding: 8px 0 !important;
   gap: 2px !important;
-  height: 100% !important;
+  flex: 1 !important;
   overflow: hidden !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  position: relative !important;
 }
 
-/* Todos os botões do menu */
-#taskmenu a,
-#taskmenu span.button,
-#taskmenu button {
-  position: relative !important;
-  width: 36px !important;
-  height: 36px !important;
-  min-height: 36px !important;
-  max-height: 36px !important;
+/* ---- Botões do menu ---- */
+#taskmenu a.button,
+#taskmenu a {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  border-radius: 6px !important;
-  color: #9a9a9a !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  border-radius: 8px !important;
+  color: #666 !important;
   text-decoration: none !important;
-  transition: background 0.15s ease, color 0.15s ease !important;
+  transition: background 0.15s, color 0.15s !important;
   overflow: hidden !important;
   padding: 0 !important;
-  max-width: 36px !important;
-  /* Oculta texto — mostra apenas ícone */
-  font-size: 0 !important;
-  line-height: 0 !important;
-  letter-spacing: -999px !important;
-  text-indent: -9999px !important;
-}
-
-/* Ícone .inner — restaura visibilidade */
-#taskmenu a .inner,
-#taskmenu span.button .inner,
-#taskmenu button .inner {
-  font-size: 16px !important;
-  line-height: 1 !important;
-  letter-spacing: 0 !important;
-  text-indent: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 36px !important;
-  height: 36px !important;
-  min-width: 36px !important;
   flex-shrink: 0 !important;
 }
 
+/* O .inner guarda o texto e o ícone (via ::before)
+   Ocultamos o texto com font-size:0, o ícone (::before) continua visível */
+#taskmenu a .inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 0 !important;       /* oculta texto */
+  line-height: 0 !important;
+  color: inherit !important;
+}
+
+/* Restaura tamanho do ícone FontAwesome no ::before */
+#taskmenu a .inner::before {
+  font-size: 16px !important;
+  line-height: 1 !important;
+  display: block !important;
+}
+
 /* Hover */
-#taskmenu a:hover,
-#taskmenu span.button:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: #ddd !important;
+#taskmenu a:hover {
+  background: rgba(255,255,255,.08) !important;
+  color: #ccc !important;
 }
 
 /* Ativo/selecionado */
@@ -216,15 +221,16 @@ body {
   color: #fff !important;
 }
 
-/* Botão Compor — sempre vermelho */
-#taskmenu a.compose,
-#taskmenu span.compose {
+/* Botão Compor (sempre vermelho) */
+#taskmenu a.compose {
   background: var(--it-red) !important;
   color: #fff !important;
-  margin-bottom: 4px !important;
-  box-shadow: 0 2px 6px rgba(227, 6, 19, 0.35) !important;
+  box-shadow: 0 2px 8px rgba(227,6,19,.35) !important;
+  margin-bottom: 6px !important;
 }
-#taskmenu a.compose:hover { background: var(--it-red-dark) !important; }
+#taskmenu a.compose:hover {
+  background: var(--it-red-dark) !important;
+}
 
 /* Bloco de ações (compose) */
 #taskmenu .action-buttons {
@@ -236,29 +242,32 @@ body {
   flex-shrink: 0 !important;
 }
 
-/* Botões especiais (about, logout, theme) — ficam no fundo */
+/* Special buttons (about, logout, dark mode)
+   No elastic skin original ficam position:absolute;bottom:0
+   Sobrescrevemos para position:relative no fluxo flex */
 #taskmenu .special-buttons {
-  margin-top: auto !important;
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  margin-top: auto !important;     /* empurra para o fundo */
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   gap: 2px !important;
-  padding-bottom: 6px !important;
+  padding-bottom: 8px !important;
   width: 100% !important;
   flex-shrink: 0 !important;
-  /* Garante que não saia do #layout-menu */
-  position: relative !important;
-  z-index: 1 !important;
 }
 
-/* Logout */
+/* Logout em vermelho suave */
 #taskmenu a.logout:hover {
-  background: rgba(227, 6, 19, 0.15) !important;
+  background: rgba(227,6,19,.15) !important;
   color: var(--it-red) !important;
 }
 
 /* ================================================================
-   FOLDER SIDEBAR
+   FOLDER SIDEBAR (200px)
    ================================================================ */
 #layout-sidebar {
   width: var(--it-sidebar-w) !important;
@@ -273,7 +282,6 @@ body {
   border-bottom: 1px solid var(--it-border) !important;
   font-size: 11px !important;
   color: var(--it-gray) !important;
-  letter-spacing: 0.3px !important;
 }
 
 #layout-sidebar .header .username {
@@ -283,29 +291,28 @@ body {
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  max-width: 120px !important;
+  max-width: 140px !important;
 }
 
-/* Folder list */
+/* Lista de pastas */
 #mailboxlist {
   font-size: 13px !important;
 }
 
-#mailboxlist li > a,
-#mailboxlist li > span.branch {
+#mailboxlist li > a {
   padding-left: 12px !important;
   border-left: 3px solid transparent !important;
-  color: #444 !important;
-  font-size: 13px !important;
-  transition: background 0.12s ease, border-color 0.12s ease !important;
+  color: #555 !important;
+  font-size: 12.5px !important;
+  transition: background 0.1s, border-color 0.1s !important;
 }
 
 #mailboxlist li > a:hover {
   background: #f0f0f0 !important;
-  border-left-color: var(--it-gray) !important;
+  border-left-color: #ccc !important;
 }
 
-/* Selected folder */
+/* Pasta ativa */
 #mailboxlist li.selected > a,
 #mailboxlist li.focused > a {
   background: var(--it-red-light) !important;
@@ -314,7 +321,7 @@ body {
   font-weight: 600 !important;
 }
 
-/* Unread count badge */
+/* Badge de não lidos */
 #mailboxlist .unreadcount {
   background: var(--it-red) !important;
   color: #fff !important;
@@ -330,7 +337,7 @@ body {
   line-height: 1 !important;
 }
 
-/* Footer quota */
+/* Rodapé da sidebar (quota) */
 #layout-sidebar .footer {
   background: var(--it-sidebar-bg) !important;
   border-top: 1px solid var(--it-border) !important;
@@ -339,17 +346,8 @@ body {
   color: var(--it-gray) !important;
 }
 
-#quotadisplay {
-  font-size: 11px !important;
-  color: var(--it-gray) !important;
-}
-
-#quotadisplay .count {
-  font-weight: 600 !important;
-}
-
 /* ================================================================
-   MESSAGE LIST
+   LISTA DE EMAILS
    ================================================================ */
 #layout-list {
   background: #fff !important;
@@ -362,10 +360,10 @@ body {
   border-bottom: 1px solid var(--it-border) !important;
 }
 
-/* Message rows */
+/* Linhas da lista */
 #messagelist tr {
   border-left: 3px solid transparent !important;
-  transition: background 0.1s ease !important;
+  transition: background 0.1s !important;
 }
 
 #messagelist tr.unread {
@@ -386,18 +384,8 @@ body {
   background: var(--it-red-light) !important;
 }
 
-#messagelist tr.selected td {
-  color: #333 !important;
-}
-
-/* Message sender circle avatar */
-#messagelist .contact-photo {
-  border-radius: 50% !important;
-  overflow: hidden !important;
-}
-
 /* ================================================================
-   MESSAGE CONTENT / PREVIEW PANEL
+   PAINEL DE CONTEÚDO (leitura de email)
    ================================================================ */
 #layout-content {
   background: #fff !important;
@@ -409,7 +397,7 @@ body {
 }
 
 /* ================================================================
-   BUTTONS & TOOLBAR
+   BOTÕES & TOOLBAR
    ================================================================ */
 .btn-primary,
 button.btn-primary,
@@ -425,22 +413,19 @@ a.btn-primary {
   border-color: var(--it-red-dark) !important;
 }
 
-/* Search form */
-.searchbar .input-group-text,
-.searchbar button {
-  border-color: var(--it-border) !important;
+/* Botão Responder / Encaminhar */
+#toolbar-menu a.reply,
+#toolbar-menu a.forward,
+.toolbar a.reply,
+.toolbar a.forward {
+  color: var(--it-red) !important;
 }
 
 /* ================================================================
-   LOGIN PAGE
+   TELA DE LOGIN
    ================================================================ */
-.task-login body,
-body.task-login {
-  background: #1a1a1a !important;
-}
-
 .task-login #layout-content {
-  background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+  background: #1a1a1a !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -448,137 +433,59 @@ body.task-login {
 
 .task-login #logo {
   display: block !important;
-  margin: 0 auto 24px !important;
+  margin: 0 auto 20px !important;
   max-height: 56px !important;
   max-width: 200px !important;
   object-fit: contain !important;
 }
 
-/* Login card */
 .task-login .propform {
   background: #fff !important;
   border-radius: 10px !important;
-  padding: 36px 32px !important;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45) !important;
+  padding: 32px !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,.45) !important;
   min-width: 340px !important;
   max-width: 400px !important;
   width: 100% !important;
 }
 
-/* Login brand block above form */
-.task-login .propform::before {
-  content: "Infratech Engenharia";
-  display: block;
-  color: var(--it-red);
-  font-size: 18px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 4px;
-  letter-spacing: 0.3px;
-}
-
-.task-login .propform::after {
-  content: "Sistema de Comunicação";
-  display: block;
-  color: #999;
-  font-size: 11px;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-}
-
-.task-login .input-group-text,
-.task-login label {
-  color: #555 !important;
-  font-size: 13px !important;
-}
-
-.task-login .form-control {
-  border-color: var(--it-border) !important;
-  font-size: 13px !important;
-}
-
 .task-login .form-control:focus {
   border-color: var(--it-red) !important;
-  box-shadow: 0 0 0 0.15rem rgba(227, 6, 19, 0.15) !important;
+  box-shadow: 0 0 0 0.15rem rgba(227,6,19,.15) !important;
 }
-
-.task-login .btn-primary {
-  background: var(--it-red) !important;
-  border-color: var(--it-red) !important;
-  width: 100% !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.5px !important;
-}
-
-.task-login .btn-primary:hover {
-  background: var(--it-red-dark) !important;
-}
-
-.task-login #login-footer {
-  color: #999 !important;
-  font-size: 11px !important;
-  text-align: center !important;
-  margin-top: 16px !important;
-}
-
-.task-login #login-footer a {
-  color: var(--it-gray) !important;
-}
-
-/* ================================================================
-   DEPARTMENT TAGS (utility classes)
-   ================================================================ */
-.it-tag {
-  display: inline-block;
-  padding: 1px 7px;
-  border-radius: 3px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 18px;
-}
-
-.it-tag-eng { background: #fde8e9; color: var(--it-red); }
-.it-tag-rh  { background: #e6f9ef; color: var(--it-green); }
-.it-tag-fin { background: #e3eeff; color: #1d4ed8; }
-.it-tag-ti  { background: #f0e9ff; color: #7c3aed; }
 
 /* ================================================================
    DARK MODE
    ================================================================ */
 html.dark-mode #infratech-header {
   background: #0d0d0d !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6) !important;
-}
-
-html.dark-mode .it-brand-sub {
-  color: #555 !important;
-}
-
-html.dark-mode .it-user-email {
-  color: #666 !important;
 }
 
 html.dark-mode #layout-menu {
-  background: #181818 !important;
+  background: #161616 !important;
+}
+
+html.dark-mode #taskmenu a {
+  color: #444 !important;
+}
+
+html.dark-mode #taskmenu a:hover {
+  background: rgba(255,255,255,.06) !important;
+  color: #aaa !important;
 }
 
 html.dark-mode #layout-sidebar {
   background: #1e1e1e !important;
-  border-right-color: #2d2d2d !important;
+  border-right-color: #2a2a2a !important;
 }
 
 html.dark-mode #layout-sidebar .header {
   background: #1e1e1e !important;
-  border-bottom-color: #2d2d2d !important;
-  color: #888 !important;
+  border-bottom-color: #2a2a2a !important;
 }
 
 html.dark-mode #mailboxlist li > a {
-  color: #bbb !important;
+  color: #999 !important;
 }
 
 html.dark-mode #mailboxlist li > a:hover {
@@ -592,18 +499,18 @@ html.dark-mode #mailboxlist li.selected > a {
 
 html.dark-mode #layout-sidebar .footer {
   background: #1e1e1e !important;
-  border-top-color: #2d2d2d !important;
+  border-top-color: #2a2a2a !important;
 }
 
 html.dark-mode #layout-list {
-  background: #222 !important;
-  border-right-color: #2d2d2d !important;
+  background: #1e1e1e !important;
+  border-right-color: #2a2a2a !important;
 }
 
 html.dark-mode #layout-list .header,
 html.dark-mode #messagelist-header {
-  background: #222 !important;
-  border-bottom-color: #2d2d2d !important;
+  background: #1e1e1e !important;
+  border-bottom-color: #2a2a2a !important;
 }
 
 html.dark-mode #messagelist tr:hover {
@@ -620,11 +527,23 @@ html.dark-mode #layout-content {
 
 html.dark-mode #layout-content .header {
   background: #1e1e1e !important;
-  border-bottom-color: #2d2d2d !important;
+  border-bottom-color: #2a2a2a !important;
 }
 
 /* ================================================================
-   COMPOSE — resize handle (topo da janela flutuante)
+   SCROLLBARS
+   ================================================================ */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--it-gray); }
+html.dark-mode ::-webkit-scrollbar-thumb { background: #3a3a3a; }
+
+/* ================================================================
+   COMPOSE / RESIZE HANDLES
    ================================================================ */
 .it-compose-resize-handle {
   position: absolute !important;
@@ -639,23 +558,9 @@ html.dark-mode #layout-content .header {
 }
 .it-compose-resize-handle:hover,
 .it-compose-resize-handle.it-dragging {
-  background: rgba(227, 6, 19, 0.35) !important;
+  background: rgba(227,6,19,.35) !important;
 }
 
-/* ================================================================
-   REPLY / COMPOSE EDITOR — área redimensionável
-   ================================================================ */
-
-/* Caixa de reply inline no painel de mensagem */
-#layout-content .reply-messagecontframe,
-#layout-content #compose-content,
-#compose-content .composebody,
-#composebody,
-.it-resize-editor {
-  overflow-y: auto !important;
-}
-
-/* Handle visual para caixas de texto do Roundcube */
 .it-reply-resize-handle {
   height: 6px !important;
   background: transparent !important;
@@ -666,7 +571,6 @@ html.dark-mode #layout-content .header {
   border-top: 1px solid var(--it-border) !important;
   transition: background .12s !important;
   flex-shrink: 0 !important;
-  margin: 0 !important;
 }
 .it-reply-resize-handle::after {
   content: '' !important;
@@ -675,78 +579,22 @@ html.dark-mode #layout-content .header {
   border-radius: 2px !important;
   background: #d0d0d0 !important;
 }
-.it-reply-resize-handle:hover::after,
-.it-reply-resize-handle.it-dragging::after {
-  background: var(--it-red) !important;
-}
 .it-reply-resize-handle:hover,
 .it-reply-resize-handle.it-dragging {
   background: #f5f5f5 !important;
 }
-
-/* Janela de compose padrão do Roundcube (elastic) */
-#compose-content {
-  position: relative !important;
-}
-
-/* Editor TinyMCE / plain text dentro do compose */
-#compose-content .mce-edit-area,
-#compose-content iframe,
-#compose-content .composebody,
-#composebody {
-  min-height: 120px !important;
-  transition: height .05s !important;
-}
-
-html.dark-mode .it-reply-resize-handle {
-  border-top-color: #2d2d2d !important;
-}
-html.dark-mode .it-reply-resize-handle:hover,
-html.dark-mode .it-reply-resize-handle.it-dragging {
-  background: #222 !important;
-}
-html.dark-mode .it-reply-resize-handle::after {
-  background: #444 !important;
+.it-reply-resize-handle:hover::after,
+.it-reply-resize-handle.it-dragging::after {
+  background: var(--it-red) !important;
 }
 
 /* ================================================================
-   SCROLLBARS
-   ================================================================ */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d0d0d0;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--it-gray);
-}
-
-html.dark-mode ::-webkit-scrollbar-thumb {
-  background: #444;
-}
-
-/* ================================================================
-   RESPONSIVE — Mobile
+   RESPONSIVE
    ================================================================ */
 @media (max-width: 768px) {
-  .it-brand,
-  .it-header-right {
-    display: none !important;
-  }
-
-  #infratech-header {
-    padding: 0 10px !important;
-  }
-
+  .it-brand-wrap,
+  .it-header-right { display: none !important; }
+  #infratech-header { padding: 0 !important; }
   #layout-menu {
     width: 44px !important;
     min-width: 44px !important;
