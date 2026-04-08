@@ -150,6 +150,8 @@
   max-width: var(--it-menu-w) !important;
   border-right: none !important;
   overflow: hidden !important;
+  /* Contexto de posicionamento para os .special-buttons absolutos */
+  position: relative !important;
 }
 
 /* Esconde cabeçalho com logo original */
@@ -157,18 +159,20 @@
   display: none !important;
 }
 
-/* Container flex do menu */
+/* Container flex do menu
+   position:static para NÃO ser contexto dos .special-buttons absolutos —
+   quem os ancora é o #layout-menu acima */
 #taskmenu {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding: 8px 0 !important;
+  /* padding-bottom reserva espaço para os ~4 botões do special-buttons */
+  padding: 8px 0 175px !important;
   gap: 0 !important;
   height: 100% !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  /* Importante: o elastic usa position:relative no taskmenu */
-  position: relative !important;
+  position: static !important;
 }
 
 /* ---- span.action-buttons (contém o compose) ---- */
@@ -179,6 +183,13 @@
   width: 100% !important;
   padding: 0 0 6px 0 !important;
   flex-shrink: 0 !important;
+}
+
+/* Garante que o compose seja sempre visível */
+#taskmenu .action-buttons > a.compose {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* ---- Todos os links de navegação do menu ---- */
@@ -257,22 +268,21 @@
 }
 
 /* ---- span.special-buttons ----
-   O elastic original usa:
-   .special-buttons { position:absolute; bottom:0; left:0; right:0; }
-   Sobrescrevemos para position:static e margin-top:auto ----*/
+   Mantemos position:absolute do elastic, mas agora âncora em #layout-menu
+   (que tem position:relative), não em #layout.
+   #taskmenu tem position:static para não interferir. ---- */
 #taskmenu .special-buttons {
-  position: static !important;
-  bottom: auto !important;
-  left: auto !important;
-  right: auto !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
   width: 100% !important;
-  margin-top: auto !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding-bottom: 8px !important;
+  padding: 0 0 8px !important;
   gap: 0 !important;
-  flex-shrink: 0 !important;
+  background: var(--it-menu-bg) !important;
 }
 
 /* Botões dentro do special-buttons */
