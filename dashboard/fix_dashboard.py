@@ -17,7 +17,7 @@
 # TODO: Log de tentativas de login falhas
 # ============================================================
 
-import re, json, subprocess, email, urllib.request
+import re, json, subprocess, email
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 
@@ -26,17 +26,6 @@ BRT = timezone(timedelta(hours=-3))
 def run(cmd):
     r = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return r.stdout.decode('utf-8', errors='replace')
-
-def get_real_now():
-    """Busca hora real via HTTP para contornar relógio do servidor errado."""
-    try:
-        req = urllib.request.urlopen('https://www.google.com', timeout=5)
-        date_str = req.headers.get('Date')
-        if date_str:
-            return parsedate_to_datetime(date_str).astimezone(BRT)
-    except:
-        pass
-    return datetime.now(BRT)
 
 def brt_from_log(ts_str):
     try:
@@ -64,7 +53,7 @@ def decode_hdr(raw):
 usuarios = [u.strip() for u in run(['docker','exec','poste','ls','/data/domains/infratechengenharia.com/']).strip().split('\n') if u.strip()]
 
 recebidos = []
-hoje_brt = get_real_now()
+hoje_brt = datetime.now(BRT)
 dois_dias_atras = hoje_brt - timedelta(days=2)
 
 for user in usuarios:
@@ -105,12 +94,15 @@ for user in usuarios:
             # --- Filtro de data: emails sem data ou com data inválida são descartados ---
             if not date_h:
                 continue
+            data_futura = False
             try:
-                from email.utils import parsedate_to_datetime
                 t = parsedate_to_datetime(date_h.group(1).strip())
                 t_brt = t.astimezone(BRT)
                 if t_brt.replace(tzinfo=None) < dois_dias_atras.replace(tzinfo=None):
                     continue
+                # Data mais de 1 dia no futuro = header forjado (técnica de spam)
+                if t_brt.replace(tzinfo=None) > (hoje_brt + timedelta(days=1)).replace(tzinfo=None):
+                    data_futura = True
                 data = t_brt.strftime('%d/%m/%Y')
                 hora = t_brt.strftime('%H:%M:%S')
             except:
@@ -135,7 +127,7 @@ for user in usuarios:
                 m = re.search(r'dmarc=(\w+)', auth_str, re.IGNORECASE)
                 if m: dmarc = m.group(1)
 
-            if is_spam:
+            if is_spam or data_futura:
                 tipo = 'Spam'
             elif reply_h:
                 tipo = 'Resposta'
