@@ -17,14 +17,26 @@
 # TODO: Log de tentativas de login falhas
 # ============================================================
 
-import re, json, subprocess, email
+import re, json, subprocess, email, urllib.request
 from datetime import datetime, timezone, timedelta
+from email.utils import parsedate_to_datetime
 
 BRT = timezone(timedelta(hours=-3))
 
 def run(cmd):
     r = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return r.stdout.decode('utf-8', errors='replace')
+
+def get_real_now():
+    """Busca hora real via HTTP para contornar relógio do servidor errado."""
+    try:
+        req = urllib.request.urlopen('https://www.google.com', timeout=5)
+        date_str = req.headers.get('Date')
+        if date_str:
+            return parsedate_to_datetime(date_str).astimezone(BRT)
+    except:
+        pass
+    return datetime.now(BRT)
 
 def brt_from_log(ts_str):
     try:
@@ -52,7 +64,7 @@ def decode_hdr(raw):
 usuarios = [u.strip() for u in run(['docker','exec','poste','ls','/data/domains/infratechengenharia.com/']).strip().split('\n') if u.strip()]
 
 recebidos = []
-hoje_brt = datetime.now(BRT)
+hoje_brt = get_real_now()
 dois_dias_atras = hoje_brt - timedelta(days=2)
 
 for user in usuarios:
@@ -194,7 +206,7 @@ for line in lines2:
         })
 
 enviados = list(reversed(enviados))
-hoje = datetime.now(BRT).strftime('%d/%m/%Y')
+hoje = hoje_brt.strftime('%d/%m/%Y')
 rec_hoje = sum(1 for r in recebidos if r['data'] == hoje)
 env_hoje = sum(1 for e in enviados if e['data'] == hoje)
 
@@ -203,7 +215,7 @@ fila_out = run(['docker','exec','poste','find','/data/queue','-type','f']).strip
 fila = len([l for l in fila_out.split('\n') if l])
 
 data_out = {
-    "atualizado": datetime.now(BRT).strftime('%d/%m/%Y %H:%M:%S'),
+    "atualizado": hoje_brt.strftime('%d/%m/%Y %H:%M:%S'),
     "recebidos_hoje": rec_hoje,
     "enviados_hoje": env_hoje,
     "ip_bloqueado": ip if ip else "nenhum",
