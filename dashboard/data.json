@@ -1,0 +1,610 @@
+{
+  "atualizado": "19/06/2026 12:42:02",
+  "recebidos_hoje": 104,
+  "enviados_hoje": 0,
+  "ip_bloqueado": "nenhum",
+  "fila": 1,
+  "recebidos": [
+    {
+      "timestamp": "2026-06-19 12:40:40.730201",
+      "destinatario": "infratech@infratechengenharia.com",
+      "msgid": "PXPjy.GTP.1781872838.IT96T1flCVS.BNts@PXPjy.GTP.b01fcd8c-idc.po.dinpro.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:40:25.077182",
+      "destinatario": "ailton@infratechengenharia.com",
+      "msgid": "24C75001-2FAC-438C-A447-474F268BF133.1@mail.infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:39:45.014663",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "1172298042.441731.1781872782553@jwm-66bcbd6594-cr2dd",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:38:41.971146",
+      "destinatario": "maria@infratechengenharia.com",
+      "msgid": "688307530.434327.1781872717822@jwm-66bcbd6594-gq8rk",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:37:42.719766",
+      "destinatario": "cristiano.lopes@infratechengenharia.com",
+      "msgid": "fc691df8ac1a343ae76ed9b728d506f0@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:37:42.664571",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "fc691df8ac1a343ae76ed9b728d506f0@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:37:42.564968",
+      "destinatario": "muniquegomes@infratechengenharia.com",
+      "msgid": "fc691df8ac1a343ae76ed9b728d506f0@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:36:24.945869",
+      "destinatario": "maria@infratechengenharia.com",
+      "msgid": "20260619123622.7044E4C0677@proxy.email-ssl.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:34:45.168299",
+      "destinatario": "maria@infratechengenharia.com",
+      "msgid": "20260619123442.82E6A4C0316@proxy.email-ssl.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:31:21.792791",
+      "destinatario": "aidna@infratechengenharia.com",
+      "msgid": "1854435348.509767.1781872278543@jwm-66bcbd6594-krv85",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:21:41.724314",
+      "destinatario": "elias.santos@infratechengenharia.com",
+      "msgid": "003801dcffe6$2eedf560$8cc9e020$@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:16:51.739737",
+      "destinatario": "raquel.bomfim@infratechengenharia.com",
+      "msgid": "001a01dcffe5$81301d40$839057c0$@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:16:51.666345",
+      "destinatario": "jonathan.ribeiro@infratechengenharia.com",
+      "msgid": "001a01dcffe5$81301d40$839057c0$@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:16:51.517689",
+      "destinatario": "amabilio.barros@infratechengenharia.com",
+      "msgid": "001a01dcffe5$81301d40$839057c0$@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:10:56.926984",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAEaPrTFqlLVGojdjj0a9cfEBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAC9DSl8ehWTQI2a+TWzhUFFAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:10:56.827232",
+      "destinatario": "cicera@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAEaPrTFqlLVGojdjj0a9cfEBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAC9DSl8ehWTQI2a+TWzhUFFAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:10:56.630447",
+      "destinatario": "aidna@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAEaPrTFqlLVGojdjj0a9cfEBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAC9DSl8ehWTQI2a+TWzhUFFAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:10:56.297795",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAEaPrTFqlLVGojdjj0a9cfEBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAC9DSl8ehWTQI2a+TWzhUFFAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:10:13.044866",
+      "destinatario": "aidna@infratechengenharia.com",
+      "msgid": "17.A3.01694.0A1353A6@i-07da90582d879aaf0.mta1vrest.sd.prd.sparkpost",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:03:34.833954",
+      "destinatario": "aidna@infratechengenharia.com",
+      "msgid": "A4.0E.34054.110353A6@i-09f2ee1788c2e9e44.mta1vrest.sd.prd.sparkpost",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:02:13.683405",
+      "destinatario": "muniquegomes@infratechengenharia.com",
+      "msgid": "CABHVLXU9OECvDyOQ4gMN1WW1miL6viwd0YEDbJ+Z=GKg2bSPCA@mail.gmail.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:02:12.751577",
+      "destinatario": "luis.ramos@infratechengenharia.com",
+      "msgid": "20260619120208.C7F9D4E0770@proxy.email-ssl.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:00:55.441638",
+      "destinatario": "alan.silva@infratechengenharia.com",
+      "msgid": "abfe6abd2f97b727b157f6d28b8ca020@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 12:00:32.608612",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "01d001dcffe3$3abdf960$b039ec20$@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:55:54.889791",
+      "destinatario": "gildo.lima@infratechengenharia.com",
+      "msgid": "b56cdc00e94f9b28b23c9f0761a58eaf@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:49:59.696544",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "d41ad9c911d57e851639811f26616426@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:49:59.603603",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "d41ad9c911d57e851639811f26616426@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:49:59.425649",
+      "destinatario": "cicera@infratechengenharia.com",
+      "msgid": "d41ad9c911d57e851639811f26616426@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:49:01.362728",
+      "destinatario": "elias.santos@infratechengenharia.com",
+      "msgid": "01c901dcffe1$9eb8ade0$dc2a09a0$@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:45:59.900912",
+      "destinatario": "bruno@infratechengenharia.com",
+      "msgid": "1781869541510111591.1781869541@trans1000log.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:45:59.359931",
+      "destinatario": "elias.santos@infratechengenharia.com",
+      "msgid": "1781869541510111591.1781869541@trans1000log.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:45:59.342946",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "1781869541510111591.1781869541@trans1000log.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:45:58.986847",
+      "destinatario": "cicera@infratechengenharia.com",
+      "msgid": "1781869541510111591.1781869541@trans1000log.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:45:58.982463",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "1781869541510111591.1781869541@trans1000log.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:42:06.610375",
+      "destinatario": "cicera@infratechengenharia.com",
+      "msgid": "2e3239c52a1f9b08c18457e716715f1d@mrcontabilidade.net.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:36:07.493851",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "09a03d79433d5c910b3c658e988b240c@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:36:07.399751",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "09a03d79433d5c910b3c658e988b240c@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:33:31.831381",
+      "destinatario": "infratech@infratechengenharia.com",
+      "msgid": "tgvmpi-0q0if0-ga@spsndr.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:32:29.729464",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "82b8ddbfd25c760bccd448ab9e3f54c7@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:32:29.611224",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "82b8ddbfd25c760bccd448ab9e3f54c7@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:32:29.546999",
+      "destinatario": "gildo.lima@infratechengenharia.com",
+      "msgid": "82b8ddbfd25c760bccd448ab9e3f54c7@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:31:41.746193",
+      "destinatario": "infratech@infratechengenharia.com",
+      "msgid": "0.0.9.C5.1DCFFDF30012EBA.861E98@pm04-3.6234.emkt.kalunga.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:31:03.298778",
+      "destinatario": "geraldo.silva@infratechengenharia.com",
+      "msgid": "3adbee0c81c61de5355654217742b25b@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:30:42.965617",
+      "destinatario": "elias.santos@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAPhLmwAC7k1IkJYI7VqIojQBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAB8NQoOJxAyQYB9+PXP4P/KAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:30:42.893968",
+      "destinatario": "cristiano.lopes@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAPhLmwAC7k1IkJYI7VqIojQBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAB8NQoOJxAyQYB9+PXP4P/KAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:30:34.999428",
+      "destinatario": "elias.santos@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAPhLmwAC7k1IkJYI7VqIojQBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAD41zsM+hy7S5HOr8raj9ZHAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:30:34.929455",
+      "destinatario": "cristiano.lopes@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAPhLmwAC7k1IkJYI7VqIojQBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAD41zsM+hy7S5HOr8raj9ZHAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:24:25.774748",
+      "destinatario": "gabriely@infratechengenharia.com",
+      "msgid": "1156312017.400866.1781868263204@messenger-6f89b9f776-qkxnx",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:24:18.381213",
+      "destinatario": "gabriely@infratechengenharia.com",
+      "msgid": "631601527.400860.1781868254759@messenger-6f89b9f776-qkxnx",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:23:55.085769",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "202619061123.1pn7tfthr5n3j@ie.d.sender-sib.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:23:42.168837",
+      "destinatario": "lucas@infratechengenharia.com",
+      "msgid": "uEcg5d_TTxeIPwv4sZholw@geopod-ismtpd-6",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:22:51.232998",
+      "destinatario": "cicera@infratechengenharia.com",
+      "msgid": "IJwWMOLWQRmU8_a3NR8lzw@geopod-ismtpd-12",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:22:51.204856",
+      "destinatario": "rh@infratechengenharia.com",
+      "msgid": "IJwWMOLWQRmU8_a3NR8lzw@geopod-ismtpd-12",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:21:15.866258",
+      "destinatario": "claudia.silva@infratechengenharia.com",
+      "msgid": "71050b7f56ec4febba5246d94207a312@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:21:15.736823",
+      "destinatario": "thiago@infratechengenharia.com",
+      "msgid": "71050b7f56ec4febba5246d94207a312@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:21:15.571365",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "71050b7f56ec4febba5246d94207a312@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:21:15.508499",
+      "destinatario": "lucas@infratechengenharia.com",
+      "msgid": "71050b7f56ec4febba5246d94207a312@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:20:52.126464",
+      "destinatario": "elias.santos@infratechengenharia.com",
+      "msgid": "000a01dcffdd$af1dbfd0$0d593f70$@brasteiner.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:20:52.118754",
+      "destinatario": "cristiano.lopes@infratechengenharia.com",
+      "msgid": "000a01dcffdd$af1dbfd0$0d593f70$@brasteiner.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:19:59.969356",
+      "destinatario": "amabilio.barros@infratechengenharia.com",
+      "msgid": "26627d9ab5fb53715cd51669d791d155@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:19:59.946191",
+      "destinatario": "cristiano.lopes@infratechengenharia.com",
+      "msgid": "26627d9ab5fb53715cd51669d791d155@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:19:59.914930",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "26627d9ab5fb53715cd51669d791d155@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:19:59.877299",
+      "destinatario": "cicera@infratechengenharia.com",
+      "msgid": "26627d9ab5fb53715cd51669d791d155@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:17:23.906804",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "5b216c5c83044c225929cf179d7ec8b4@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:17:23.790188",
+      "destinatario": "muniquegomes@infratechengenharia.com",
+      "msgid": "5b216c5c83044c225929cf179d7ec8b4@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:17:23.658187",
+      "destinatario": "cristiano.lopes@infratechengenharia.com",
+      "msgid": "5b216c5c83044c225929cf179d7ec8b4@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:17:23.548739",
+      "destinatario": "maria@infratechengenharia.com",
+      "msgid": "5b216c5c83044c225929cf179d7ec8b4@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:16:53.712435",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "92d3101408e1feede72eea3315abed66@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:14:14.861040",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "5fcc56e46265d7ae0378cb284535c411@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:14:14.765204",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "5fcc56e46265d7ae0378cb284535c411@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:12:43.321175",
+      "destinatario": "jenyffer.matos@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAMUWlQW5+TJBoAafeU0ygsIBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAACye0urmCE1RJeEAvXEtMViAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:12:27.776680",
+      "destinatario": "cristiano.lopes@infratechengenharia.com",
+      "msgid": "f2459c6e6c29c7fe63937082bf1e28ad@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:12:27.714867",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "f2459c6e6c29c7fe63937082bf1e28ad@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:12:27.633421",
+      "destinatario": "cicera@infratechengenharia.com",
+      "msgid": "f2459c6e6c29c7fe63937082bf1e28ad@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:10:49.473439",
+      "destinatario": "bruno@infratechengenharia.com",
+      "msgid": "CAM8riiDEeYjKzCb84s-kFw0tj8pLsKEYD_9zBDTGQVB_+BWq-g@mail.gmail.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:09:35.893776",
+      "destinatario": "maria@infratechengenharia.com",
+      "msgid": "6a35236a.e743daa7.38b462.495e@mx.google.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:05:28.188833",
+      "destinatario": "bruno@infratechengenharia.com",
+      "msgid": "5733acf665ab8d2a10b86793b2f390f1@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:05:28.096365",
+      "destinatario": "amabilio.barros@infratechengenharia.com",
+      "msgid": "5733acf665ab8d2a10b86793b2f390f1@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:00:39.308622",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "1814d6969e7ec50dfae45156f51ea2ee@mrcontabilidade.net.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 11:00:18.499216",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "d87b7bfb7a70304ff4af21fcc49f6acc@mrcontabilidade.net.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 10:58:21.169962",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "004401dcffda$8a135b30$9e3a1190$@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 10:55:16.922188",
+      "destinatario": "jenyffer.matos@infratechengenharia.com",
+      "msgid": "!&!AAAAAAAAAAAuAAAAAAAAAMUWlQW5+TJBoAafeU0ygsIBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAAOhYYhg7fPQKjhYxHwPTpbAQAAAAA=@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 10:54:52.966628",
+      "destinatario": "muniquegomes@infratechengenharia.com",
+      "msgid": "0.2.0.D.1DCFFDA0C34776C.7DA37@mail1610.delibird-emkt0002.lwdlv.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 10:35:20.787417",
+      "destinatario": "muniquegomes@infratechengenharia.com",
+      "msgid": "202619061035.d0y63lvg5e8nj@ah.d.mailin.fr",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 10:21:31.199437",
+      "destinatario": "agatha.fonseca@infratechengenharia.com",
+      "msgid": "0a6378461669b563561e9bdcdc5fa60d@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 10:21:31.079826",
+      "destinatario": "elias.santos@infratechengenharia.com",
+      "msgid": "0a6378461669b563561e9bdcdc5fa60d@infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 10:21:07.232950",
+      "destinatario": "infratech@infratechengenharia.com",
+      "msgid": "1781864463252.72xa4x8qaer@movilitar.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 09:48:47.059741",
+      "destinatario": "bruno@infratechengenharia.com",
+      "msgid": "CPWP152MB4599FD33ADF9A560840B034EECE22@CPWP152MB4599.LAMP152.PROD.OUTLOOK.COM",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 09:48:46.988031",
+      "destinatario": "carlos.medeiros@infratechengenharia.com",
+      "msgid": "CPWP152MB4599FD33ADF9A560840B034EECE22@CPWP152MB4599.LAMP152.PROD.OUTLOOK.COM",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 09:48:46.925523",
+      "destinatario": "alan.silva@infratechengenharia.com",
+      "msgid": "CPWP152MB4599FD33ADF9A560840B034EECE22@CPWP152MB4599.LAMP152.PROD.OUTLOOK.COM",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 09:42:09.013645",
+      "destinatario": "comercial@infratechengenharia.com",
+      "msgid": "wuxXzF4agJNxtNCQ6vKChRDWXd4h6b5mJtlD2AGd4@licitaemail.licitanet.com.br",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 09:11:37.354799",
+      "destinatario": "infratech@infratechengenharia.com",
+      "msgid": "F28F4024-1675-4418-B86A-05E07E174A5A.1@mail.infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 08:30:55.854468",
+      "destinatario": "infratech@infratechengenharia.com",
+      "msgid": "407C6A17-DCB2-469B-8EC9-77747D261D45.1@mail.infratechengenharia.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 07:08:54.696145",
+      "destinatario": "ailton@infratechengenharia.com",
+      "msgid": "20260619070521.7099DD003E8@mx71.yh144.email-deliver.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 07:03:40.242722",
+      "destinatario": "edinei.amorim@infratechengenharia.com",
+      "msgid": "1500456921.4900946.1781852616514@jwm-66c898fdc8-cg2c2",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 06:06:01.029504",
+      "destinatario": "infratech@infratechengenharia.com",
+      "msgid": "1781849156.37631.l2gjjwvsss69@blandto40.messageflowhub.space",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 05:29:02.773379",
+      "destinatario": "fellipe.moreira@infratechengenharia.com",
+      "msgid": "Ky7fmxW0qkLTvPWmqugj44x7DwLTXTl2pSmfVRgdThc@node50554-assectra.jelastic.saveincloud.net",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 04:40:53.112944",
+      "destinatario": "admin@infratechengenharia.com",
+      "msgid": "b0d8177833954122b60c44bf690966f0@microsoft.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 03:50:52.665203",
+      "destinatario": "admin@infratechengenharia.com",
+      "msgid": "664c030e71234fdeab7c6c5a76146a23@microsoft.com",
+      "pasta": "INBOX"
+    },
+    {
+      "timestamp": "2026-06-19 03:45:18.170646",
+      "destinatario": "infratech@infratechengenharia.com",
+      "msgid": "lxqeeidoioru.1781840710121027400@store.medizonebd.com",
+      "pasta": "INBOX"
+    }
+  ],
+  "enviados": []
+}
