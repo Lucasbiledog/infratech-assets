@@ -36,16 +36,18 @@ def brt_from_log(ts_str):
 
 def decode_hdr(raw):
     try:
-        parts = email.header.decode_header(raw.strip())
+        # Normaliza headers dobrados (continuation lines com espaço/tab)
+        raw = re.sub(r'\r?\n[ \t]+', ' ', raw.strip())
+        parts = email.header.decode_header(raw)
         result = ''
         for p, enc in parts:
             if isinstance(p, bytes):
                 result += p.decode(enc or 'utf-8', errors='replace')
             else:
                 result += p
-        return result[:100]
+        return result.strip()[:120]
     except:
-        return raw.strip()[:100] if raw else ''
+        return raw.strip()[:120] if raw else ''
 
 usuarios = [u.strip() for u in run(['docker','exec','poste','ls','/data/domains/infratechengenharia.com/']).strip().split('\n') if u.strip()]
 
@@ -151,8 +153,26 @@ for user in usuarios:
 recebidos.sort(key=lambda x: (x['data'], x['hora']), reverse=True)
 recebidos = recebidos[:300]
 
-result2 = run(['docker','exec','poste','grep','delivered','/data/log/s6/haraka-submission/current'])
-lines2 = [l for l in result2.strip().split('\n') if 'domain=' in l and 'domain=infratechengenharia.com' not in l][-200:]
+# Lê o log completo para correlacionar sender/rcpt pelo UUID do Haraka
+UUID_RE = re.compile(r'\[([0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})\]', re.IGNORECASE)
+full_log = run(['docker','exec','poste','tail','-n','20000','/data/log/s6/haraka-submission/current'])
+all_lines = full_log.strip().split('\n')
+
+uuid_from = {}
+uuid_rcpt = {}
+for line in all_lines:
+    uuid_m = UUID_RE.search(line)
+    if not uuid_m:
+        continue
+    uid = uuid_m.group(1).upper()
+    from_m = re.search(r'C: MAIL FROM:\s*<?([^>\s]+@[^>\s]+)>?', line, re.IGNORECASE)
+    if from_m:
+        uuid_from[uid] = from_m.group(1).strip('<>')
+    rcpt_m = re.search(r'C: RCPT TO:\s*<?([^>\s]+@[^>\s]+)>?', line, re.IGNORECASE)
+    if rcpt_m:
+        uuid_rcpt[uid] = rcpt_m.group(1).strip('<>')
+
+lines2 = [l for l in all_lines if 'delivered' in l.lower() and 'domain=' in l and 'domain=infratechengenharia.com' not in l][-200:]
 
 enviados = []
 for line in lines2:
@@ -160,8 +180,8 @@ for line in lines2:
     domain = re.search(r'domain=(\S+)', line)
     host   = re.search(r'host=(\S+)', line)
     rcpts  = re.search(r'rcpts=(\S+)', line)
-    sender = re.search(r'sender=([^\s]+)', line)
-    rcpt   = re.search(r'rcpt=([^\s]+)', line)
+    uuid_m = UUID_RE.search(line)
+    uid    = uuid_m.group(1).upper() if uuid_m else ''
     if ts and domain:
         data, hora = brt_from_log(ts.group(1)[:19])
         enviados.append({
@@ -169,8 +189,8 @@ for line in lines2:
             "dominio_destino": domain.group(1),
             "host": host.group(1) if host else "",
             "rcpts": rcpts.group(1) if rcpts else "",
-            "remetente": sender.group(1) if sender else "",
-            "destinatario": rcpt.group(1) if rcpt else ""
+            "remetente": uuid_from.get(uid, ''),
+            "destinatario": uuid_rcpt.get(uid, '')
         })
 
 enviados = list(reversed(enviados))
