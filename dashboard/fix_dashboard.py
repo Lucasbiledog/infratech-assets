@@ -1,18 +1,41 @@
+# ============================================================
+# fix_dashboard.py — Monitor de Email Infratech Engenharia
+# ============================================================
+# Gera o data.json lido pelo index.html
+# Roda a cada 2 minutos via crontab:
+#   */2 * * * * /root/gera_dashboard_data.sh
+#
+# Para rodar manualmente:
+#   python3 /root/fix_dashboard.py
+#
+# Output: /var/www/dashboard/data.json
+# ============================================================
+
+# TODO: Adicionar emails rejeitados/bounces
+# TODO: Adicionar score de spam
+# TODO: Adicionar log de login falhos
+# TODO: Adicionar info de anexos
+# TODO: Filtrar enviados por remetente completo do nosso dominio
+# ============================================================
+
 import re, json, subprocess, email
 from datetime import datetime, timezone, timedelta
 
 BRT = timezone(timedelta(hours=-3))
 
+def run(cmd):
+    r = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return r.stdout.decode('utf-8', errors='replace')
+
 def brt_from_log(ts_str):
     try:
         ts_str = ts_str[:19].replace('T',' ')
         t = datetime.strptime(ts_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone.utc)
-        t = t.astimezone(BRT)
-        return t.strftime('%d/%m/%Y'), t.strftime('%H:%M:%S')
+        return t.astimezone(BRT).strftime('%d/%m/%Y'), t.astimezone(BRT).strftime('%H:%M:%S')
     except:
         return '', ''
 
-def decode_header(raw):
+def decode_hdr(raw):
     try:
         parts = email.header.decode_header(raw.strip())
         result = ''
@@ -25,9 +48,7 @@ def decode_header(raw):
     except:
         return raw.strip()[:100] if raw else ''
 
-# Listar usuarios
-result = subprocess.run(['docker','exec','poste','ls','/data/domains/infratechengenharia.com/'], capture_output=True, text=True)
-usuarios = [u.strip() for u in result.stdout.strip().split('\n') if u.strip()]
+usuarios = [u.strip() for u in run(['docker','exec','poste','ls','/data/domains/infratechengenharia.com/']).strip().split('\n') if u.strip()]
 
 recebidos = []
 hoje_brt = datetime.now(BRT)
@@ -36,16 +57,15 @@ dois_dias_atras = hoje_brt - timedelta(days=2)
 for user in usuarios:
     for pasta in ['cur', 'new']:
         path = f'/data/domains/infratechengenharia.com/{user}/Maildir/{pasta}/'
-        ls = subprocess.run(['docker','exec','poste','ls','-t', path], capture_output=True, text=True)
-        if ls.returncode != 0:
+        ls_out = run(['docker','exec','poste','ls','-t', path])
+        if not ls_out.strip():
             continue
-        arquivos = [a.strip() for a in ls.stdout.strip().split('\n') if a.strip()][:20]
+        arquivos = [a.strip() for a in ls_out.strip().split('\n') if a.strip()][:15]
         for arq in arquivos:
             filepath = path + arq
-            cat = subprocess.run(['docker','exec','poste','head','-80', filepath], capture_output=True, text=True)
-            if cat.returncode != 0:
+            content = run(['docker','exec','poste','head','-80', filepath])
+            if not content:
                 continue
-            content = cat.stdout
 
             from_h = re.search(r'^From:\s*(.+)', content, re.MULTILINE)
             to_h = re.search(r'^To:\s*(.+)', content, re.MULTILINE)
@@ -56,7 +76,7 @@ for user in usuarios:
             reply_h = re.search(r'^In-Reply-To:', content, re.MULTILINE)
             fwd_h = re.search(r'Subject:.*?(Fwd|Fw:|Enc:|Encaminhado)', content, re.MULTILINE | re.IGNORECASE)
 
-            subj = decode_header(subj_h.group(1)) if subj_h else ''
+            subj = decode_hdr(subj_h.group(1)) if subj_h else ''
             data, hora = '', ''
 
             if date_h:
@@ -64,7 +84,7 @@ for user in usuarios:
                     from email.utils import parsedate_to_datetime
                     t = parsedate_to_datetime(date_h.group(1).strip())
                     t_brt = t.astimezone(BRT)
-                    if t_brt < dois_dias_atras.replace(tzinfo=None).replace(tzinfo=BRT):
+                    if t_brt.replace(tzinfo=None) < dois_dias_atras.replace(tzinfo=None):
                         continue
                     data = t_brt.strftime('%d/%m/%Y')
                     hora = t_brt.strftime('%H:%M:%S')
@@ -77,21 +97,20 @@ for user in usuarios:
                 "data": data,
                 "hora": hora,
                 "destinatario": f'{user}@infratechengenharia.com',
-                "remetente": decode_header(from_h.group(1)) if from_h else '',
-                "para": decode_header(to_h.group(1)) if to_h else '',
-                "cc": decode_header(cc_h.group(1)) if cc_h else '',
+                "remetente": decode_hdr(from_h.group(1)) if from_h else '',
+                "para": decode_hdr(to_h.group(1)) if to_h else '',
+                "cc": decode_hdr(cc_h.group(1)) if cc_h else '',
                 "assunto": subj,
                 "tipo": tipo,
                 "msgid": msgid_h.group(1)[:60] if msgid_h else '',
-                "pasta": pasta.upper()
+                "pasta": "INBOX"
             })
 
 recebidos.sort(key=lambda x: (x['data'], x['hora']), reverse=True)
 recebidos = recebidos[:300]
 
-# Emails enviados externos
-result2 = subprocess.run(['docker','exec','poste','grep','delivered','/data/log/s6/haraka-submission/current'], capture_output=True, text=True)
-lines2 = [l for l in result2.stdout.strip().split('\n') if 'domain=' in l and 'domain=infratechengenharia.com' not in l][-200:]
+result2 = run(['docker','exec','poste','grep','delivered','/data/log/s6/haraka-submission/current'])
+lines2 = [l for l in result2.strip().split('\n') if 'domain=' in l and 'domain=infratechengenharia.com' not in l][-200:]
 
 enviados = []
 for line in lines2:
@@ -103,8 +122,7 @@ for line in lines2:
     if ts and domain:
         data, hora = brt_from_log(ts.group(1)[:19])
         enviados.append({
-            "data": data,
-            "hora": hora,
+            "data": data, "hora": hora,
             "dominio_destino": domain.group(1),
             "host": host.group(1) if host else "",
             "rcpts": rcpts.group(1) if rcpts else "",
@@ -112,13 +130,12 @@ for line in lines2:
         })
 
 enviados = list(reversed(enviados))
-
 hoje = datetime.now(BRT).strftime('%d/%m/%Y')
 rec_hoje = sum(1 for r in recebidos if r['data'] == hoje)
 env_hoje = sum(1 for e in enviados if e['data'] == hoje)
 
-ip = subprocess.run(['docker','exec','poste','redis-cli','-s','/var/run/redis/redis.sock','KEYS','guard|*'], capture_output=True, text=True).stdout.strip()
-fila_out = subprocess.run(['docker','exec','poste','find','/data/queue','-type','f'], capture_output=True, text=True).stdout.strip()
+ip = run(['docker','exec','poste','redis-cli','-s','/var/run/redis/redis.sock','KEYS','guard|*']).strip()
+fila_out = run(['docker','exec','poste','find','/data/queue','-type','f']).strip()
 fila = len([l for l in fila_out.split('\n') if l])
 
 data_out = {
