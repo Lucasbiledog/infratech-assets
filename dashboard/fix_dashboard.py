@@ -11,11 +11,10 @@
 # Output: /var/www/dashboard/data.json
 # ============================================================
 
-# TODO: Adicionar emails rejeitados/bounces
-# TODO: Adicionar score de spam
-# TODO: Adicionar log de login falhos
-# TODO: Adicionar info de anexos
-# TODO: Filtrar enviados por remetente completo do nosso dominio
+# TODO: Aba de fila com emails presos e detalhes
+# TODO: Log de emails rejeitados/bloqueados
+# TODO: Log de bounces (falha na entrega)
+# TODO: Log de tentativas de login falhas
 # ============================================================
 
 import re, json, subprocess, email
@@ -63,35 +62,73 @@ for user in usuarios:
         arquivos = [a.strip() for a in ls_out.strip().split('\n') if a.strip()][:15]
         for arq in arquivos:
             filepath = path + arq
-            content = run(['docker','exec','poste','head','-80', filepath])
+            content = run(['docker','exec','poste','head','-120', filepath])
             if not content:
                 continue
 
-            from_h = re.search(r'^From:\s*(.+)', content, re.MULTILINE)
-            to_h = re.search(r'^To:\s*(.+)', content, re.MULTILINE)
-            cc_h = re.search(r'^Cc:\s*(.+)', content, re.MULTILINE)
-            subj_h = re.search(r'^Subject:\s*(.+)', content, re.MULTILINE)
-            date_h = re.search(r'^Date:\s*(.+)', content, re.MULTILINE)
-            msgid_h = re.search(r'^Message-ID:\s*<([^>]+)>', content, re.MULTILINE)
-            reply_h = re.search(r'^In-Reply-To:', content, re.MULTILINE)
-            fwd_h = re.search(r'Subject:.*?(Fwd|Fw:|Enc:|Encaminhado)', content, re.MULTILINE | re.IGNORECASE)
+            from_h    = re.search(r'^From:\s*(.+)',            content, re.MULTILINE)
+            to_h      = re.search(r'^To:\s*(.+)',              content, re.MULTILINE)
+            cc_h      = re.search(r'^Cc:\s*(.+)',              content, re.MULTILINE)
+            subj_h    = re.search(r'^Subject:\s*(.+)',         content, re.MULTILINE)
+            date_h    = re.search(r'^Date:\s*(.+)',            content, re.MULTILINE)
+            msgid_h   = re.search(r'^Message-ID:\s*<([^>]+)>', content, re.MULTILINE)
+            reply_h   = re.search(r'^In-Reply-To:',            content, re.MULTILINE)
+            fwd_h     = re.search(r'Subject:.*?(Fwd|Fw:|Enc:|Encaminhado)', content, re.MULTILINE | re.IGNORECASE)
+
+            # Spam
+            spam_flag_h  = re.search(r'^X-Spam-Flag:\s*(.+)',            content, re.MULTILINE | re.IGNORECASE)
+            spam_score_h = re.search(r'^X-Spam-Score:\s*([\d\.\-]+)',    content, re.MULTILINE | re.IGNORECASE)
+            spam_status_h= re.search(r'^X-Spam-Status:\s*(.+)',          content, re.MULTILINE | re.IGNORECASE)
+
+            # DKIM / SPF / DMARC
+            auth_h = re.search(r'^Authentication-Results:\s*(.+)', content, re.MULTILINE | re.IGNORECASE)
+
+            # Anexo
+            has_attach = bool(re.search(r'filename\s*=\s*["\']?(.+?)["\']?\s*[\r\n;]', content, re.IGNORECASE))
 
             subj = decode_hdr(subj_h.group(1)) if subj_h else ''
-            data, hora = '', ''
 
-            if date_h:
-                try:
-                    from email.utils import parsedate_to_datetime
-                    t = parsedate_to_datetime(date_h.group(1).strip())
-                    t_brt = t.astimezone(BRT)
-                    if t_brt.replace(tzinfo=None) < dois_dias_atras.replace(tzinfo=None):
-                        continue
-                    data = t_brt.strftime('%d/%m/%Y')
-                    hora = t_brt.strftime('%H:%M:%S')
-                except:
-                    pass
+            # --- Filtro de data: emails sem data ou com data inválida são descartados ---
+            if not date_h:
+                continue
+            try:
+                from email.utils import parsedate_to_datetime
+                t = parsedate_to_datetime(date_h.group(1).strip())
+                t_brt = t.astimezone(BRT)
+                if t_brt.replace(tzinfo=None) < dois_dias_atras.replace(tzinfo=None):
+                    continue
+                data = t_brt.strftime('%d/%m/%Y')
+                hora = t_brt.strftime('%H:%M:%S')
+            except:
+                continue  # data ilegível → descarta
 
-            tipo = 'Resposta' if reply_h else ('Reencaminhado' if fwd_h else 'Normal')
+            # Spam detection
+            is_spam = False
+            if spam_flag_h and 'yes' in spam_flag_h.group(1).lower():
+                is_spam = True
+            elif spam_status_h and spam_status_h.group(1).lower().startswith('yes'):
+                is_spam = True
+            spam_score = spam_score_h.group(1) if spam_score_h else ''
+
+            # DKIM / SPF / DMARC
+            dkim = spf = dmarc = ''
+            if auth_h:
+                auth_str = auth_h.group(1)
+                m = re.search(r'dkim=(\w+)', auth_str, re.IGNORECASE)
+                if m: dkim = m.group(1)
+                m = re.search(r'spf=(\w+)', auth_str, re.IGNORECASE)
+                if m: spf = m.group(1)
+                m = re.search(r'dmarc=(\w+)', auth_str, re.IGNORECASE)
+                if m: dmarc = m.group(1)
+
+            if is_spam:
+                tipo = 'Spam'
+            elif reply_h:
+                tipo = 'Resposta'
+            elif fwd_h:
+                tipo = 'Reencaminhado'
+            else:
+                tipo = 'Normal'
 
             recebidos.append({
                 "data": data,
@@ -102,6 +139,11 @@ for user in usuarios:
                 "cc": decode_hdr(cc_h.group(1)) if cc_h else '',
                 "assunto": subj,
                 "tipo": tipo,
+                "spam_score": spam_score,
+                "anexo": has_attach,
+                "dkim": dkim,
+                "spf": spf,
+                "dmarc": dmarc,
                 "msgid": msgid_h.group(1)[:60] if msgid_h else '',
                 "pasta": "INBOX"
             })
@@ -114,11 +156,12 @@ lines2 = [l for l in result2.strip().split('\n') if 'domain=' in l and 'domain=i
 
 enviados = []
 for line in lines2:
-    ts = re.search(r'^([\d-]+ [\d:\.]+)', line)
+    ts     = re.search(r'^([\d-]+ [\d:\.]+)', line)
     domain = re.search(r'domain=(\S+)', line)
-    host = re.search(r'host=(\S+)', line)
-    rcpts = re.search(r'rcpts=(\S+)', line)
+    host   = re.search(r'host=(\S+)', line)
+    rcpts  = re.search(r'rcpts=(\S+)', line)
     sender = re.search(r'sender=([^\s]+)', line)
+    rcpt   = re.search(r'rcpt=([^\s]+)', line)
     if ts and domain:
         data, hora = brt_from_log(ts.group(1)[:19])
         enviados.append({
@@ -126,7 +169,8 @@ for line in lines2:
             "dominio_destino": domain.group(1),
             "host": host.group(1) if host else "",
             "rcpts": rcpts.group(1) if rcpts else "",
-            "remetente": sender.group(1) if sender else ""
+            "remetente": sender.group(1) if sender else "",
+            "destinatario": rcpt.group(1) if rcpt else ""
         })
 
 enviados = list(reversed(enviados))

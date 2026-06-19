@@ -16,38 +16,53 @@ header span { font-size: 12px; color: #aaa; }
 .card .valor { font-size: 28px; font-weight: bold; color: #fff; }
 .card.alerta { border-left-color: #ff4444; }
 .card.ok { border-left-color: #00cc66; }
-.toolbar { display: flex; align-items: center; gap: 8px; padding: 8px 24px; }
-.toolbar input { flex: 1; padding: 9px 14px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 13px; }
-.toolbar input:focus { outline: none; border-color: #E30613; }
+.toolbar { display: flex; align-items: center; gap: 8px; padding: 8px 24px; flex-wrap: wrap; }
+.toolbar input[type=text] { flex: 1; min-width: 200px; padding: 9px 14px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 13px; }
+.toolbar input[type=text]:focus { outline: none; border-color: #E30613; }
+.toolbar input[type=date] { padding: 8px 10px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 13px; }
+.toolbar input[type=date]:focus { outline: none; border-color: #E30613; }
+.toolbar label { font-size: 12px; color: #888; white-space: nowrap; }
+.toolbar .btn-clear { padding: 8px 12px; background: #333; border: none; color: #aaa; border-radius: 6px; cursor: pointer; font-size: 12px; }
+.toolbar .btn-clear:hover { background: #444; color: #fff; }
 .tabs { display: flex; gap: 4px; padding: 0 24px; margin-top: 8px; }
 .tab { padding: 9px 18px; background: #1a1a1a; border: none; color: #888; cursor: pointer; border-radius: 6px 6px 0 0; font-size: 13px; }
 .tab.active { background: #E30613; color: #fff; }
 .tabcontent { display: none; padding: 0 24px 24px; overflow-x: auto; }
 .tabcontent.active { display: block; }
-table { width: 100%; border-collapse: collapse; background: #1a1a1a; border-radius: 0 8px 8px 8px; min-width: 900px; }
+table { width: 100%; border-collapse: collapse; background: #1a1a1a; border-radius: 0 8px 8px 8px; min-width: 1000px; }
 th { background: #222; padding: 9px 12px; text-align: left; font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; cursor: pointer; }
 th:hover { color: #E30613; }
-td { padding: 8px 12px; border-bottom: 1px solid #1f1f1f; font-size: 12px; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+td { padding: 8px 12px; border-bottom: 1px solid #1f1f1f; font-size: 12px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 tr:hover td { background: #1f1f1f; }
+tr.row-spam td { background: #1a0a0a; }
+tr.row-spam:hover td { background: #200a0a; }
 .badge { padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; }
-.badge-inbox { background: #0d2e0d; color: #00cc66; }
-.badge-spam { background: #2e0d0d; color: #ff6666; }
-.badge-normal { background: #1a2a3a; color: #4488ff; }
-.badge-resposta { background: #2a1a3a; color: #aa66ff; }
-.badge-reenc { background: #2a2a1a; color: #ffaa44; }
-.status-ok { color: #00cc66; font-weight: bold; }
+.badge-inbox   { background: #0d2e0d; color: #00cc66; }
+.badge-spam-folder { background: #2e0d0d; color: #ff6666; }
+.badge-normal  { background: #1a2a3a; color: #4488ff; }
+.badge-resposta{ background: #2a1a3a; color: #aa66ff; }
+.badge-reenc   { background: #2a2a1a; color: #ffaa44; }
+.badge-spam    { background: #5a0000; color: #ff4444; border: 1px solid #ff4444; }
+.status-ok     { color: #00cc66; font-weight: bold; }
 .status-alerta { color: #ff4444; font-weight: bold; }
+.auth-pass  { color: #00cc66; font-size: 10px; font-weight: bold; }
+.auth-fail  { color: #ff4444; font-size: 10px; font-weight: bold; }
+.auth-none  { color: #555; font-size: 10px; }
+.score-high { color: #ff4444; font-weight: bold; }
+.score-med  { color: #ffaa44; }
+.score-ok   { color: #888; }
+.attach-icon { color: #ffcc44; font-size: 13px; }
 .refresh { background: #E30613; color: #fff; border: none; padding: 9px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; white-space: nowrap; }
 .refresh:hover { background: #c00510; }
-.col-data { color: #888; width: 90px; }
-.col-hora { color: #fff; width: 75px; }
-.col-dest { color: #fff; font-weight: bold; }
-.col-rem { color: #88aaff; }
+.col-data  { color: #888; width: 88px; }
+.col-hora  { color: #fff; width: 72px; }
+.col-dest  { color: #fff; font-weight: bold; }
+.col-rem   { color: #88aaff; }
 .col-assunto { color: #ddd; }
-.col-cc { color: #aaa; font-size: 11px; }
-.col-tipo { width: 100px; }
-.col-ext { color: #aaa; }
-.counter { font-size: 11px; color: #666; padding: 4px 24px; }
+.col-cc    { color: #aaa; font-size: 11px; }
+.col-tipo  { width: 100px; }
+.col-ext   { color: #aaa; }
+.counter   { font-size: 11px; color: #666; padding: 4px 24px; }
 </style>
 </head>
 <body>
@@ -66,6 +81,11 @@ tr:hover td { background: #1f1f1f; }
 </div>
 <div class="toolbar">
   <input type="text" id="busca" placeholder="Buscar por destinatario, remetente, assunto, CC, dominio..." oninput="filtrar()">
+  <label>De:</label>
+  <input type="date" id="filtro-de" onchange="filtrar()">
+  <label>Ate:</label>
+  <input type="date" id="filtro-ate" onchange="filtrar()">
+  <button class="btn-clear" onclick="limparFiltros()">Limpar</button>
 </div>
 <div id="counter" class="counter"></div>
 <div class="tabs">
@@ -83,6 +103,9 @@ tr:hover td { background: #1f1f1f; }
         <th onclick="sortTable('recebidos','assunto')">Assunto</th>
         <th onclick="sortTable('recebidos','cc')">CC</th>
         <th onclick="sortTable('recebidos','tipo')">Tipo</th>
+        <th title="Score de spam">Score</th>
+        <th title="DKIM / SPF / DMARC">Auth</th>
+        <th title="Anexo">Anx</th>
         <th>Pasta</th>
       </tr>
     </thead>
@@ -95,7 +118,8 @@ tr:hover td { background: #1f1f1f; }
       <tr>
         <th>Data</th>
         <th>Hora</th>
-        <th>Remetente</th>
+        <th>Remetente (nosso)</th>
+        <th>Destinatario Externo</th>
         <th>Dominio Destino</th>
         <th>Servidor Destino</th>
         <th>Rcpts</th>
@@ -105,88 +129,170 @@ tr:hover td { background: #1f1f1f; }
   </table>
 </div>
 <script>
-var dadosGlobais={};
-var sortDir={};
-function carregarDados(){
-  document.getElementById("atualizado").textContent="Atualizando...";
-  fetch("data.json?t="+Date.now()).then(function(r){return r.json();}).then(function(d){
-    dadosGlobais=d;
-    document.getElementById("atualizado").textContent="Atualizado: "+d.atualizado;
-    document.getElementById("recebidos-hoje").textContent=d.recebidos_hoje;
-    document.getElementById("enviados-hoje").textContent=d.enviados_hoje;
-    document.getElementById("fila").textContent=d.fila;
-    var ipCard=document.getElementById("card-ip");
-    var ipStatus=document.getElementById("ip-status");
-    if(d.ip_bloqueado&&d.ip_bloqueado!=="nenhum"&&d.ip_bloqueado.trim()!==""){
-      ipStatus.innerHTML='<span class="status-alerta">BLOQUEADO</span>';
-      ipCard.className="card alerta";
-    }else{
-      ipStatus.innerHTML='<span class="status-ok">OK</span>';
-      ipCard.className="card ok";
-    }
-    document.getElementById("card-fila").className=d.fila>5?"card alerta":"card ok";
-    renderTabela(d.recebidos,d.enviados);
-  }).catch(function(e){document.getElementById("atualizado").textContent="Erro: "+e.message;});
+var dadosGlobais = {};
+var sortDir = {};
+
+function carregarDados() {
+  document.getElementById("atualizado").textContent = "Atualizando...";
+  fetch("data.json?t=" + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      dadosGlobais = d;
+      document.getElementById("atualizado").textContent = "Atualizado: " + d.atualizado;
+      document.getElementById("recebidos-hoje").textContent = d.recebidos_hoje;
+      document.getElementById("enviados-hoje").textContent = d.enviados_hoje;
+      document.getElementById("fila").textContent = d.fila;
+      var ipCard = document.getElementById("card-ip");
+      var ipStatus = document.getElementById("ip-status");
+      if (d.ip_bloqueado && d.ip_bloqueado !== "nenhum" && d.ip_bloqueado.trim() !== "") {
+        ipStatus.innerHTML = '<span class="status-alerta">BLOQUEADO</span>';
+        ipCard.className = "card alerta";
+      } else {
+        ipStatus.innerHTML = '<span class="status-ok">OK</span>';
+        ipCard.className = "card ok";
+      }
+      document.getElementById("card-fila").className = d.fila > 5 ? "card alerta" : "card ok";
+      renderTabela(d.recebidos, d.enviados);
+    })
+    .catch(function(e) {
+      document.getElementById("atualizado").textContent = "Erro: " + e.message;
+    });
 }
-function tipoBadge(tipo){
-  if(tipo==="Resposta") return "badge badge-resposta";
-  if(tipo==="Reencaminhado") return "badge badge-reenc";
+
+function parseDateBR(str) {
+  // "25/06/2026" -> Date
+  if (!str) return null;
+  var p = str.split('/');
+  if (p.length !== 3) return null;
+  return new Date(p[2], p[1]-1, p[0]);
+}
+
+function filtrar() {
+  if (dadosGlobais.recebidos) renderTabela(dadosGlobais.recebidos, dadosGlobais.enviados);
+}
+
+function limparFiltros() {
+  document.getElementById("busca").value = '';
+  document.getElementById("filtro-de").value = '';
+  document.getElementById("filtro-ate").value = '';
+  filtrar();
+}
+
+function tipoBadge(tipo) {
+  if (tipo === "Spam")          return "badge badge-spam";
+  if (tipo === "Resposta")      return "badge badge-resposta";
+  if (tipo === "Reencaminhado") return "badge badge-reenc";
   return "badge badge-normal";
 }
-function renderTabela(recebidos,enviados){
-  var busca=document.getElementById("busca").value.toLowerCase();
-  var tbR=document.getElementById("tabela-recebidos");
-  var filtR=recebidos.filter(function(r){return !busca||JSON.stringify(r).toLowerCase().indexOf(busca)>=0;});
-  document.getElementById("counter").textContent="Exibindo "+filtR.length+" de "+recebidos.length+" emails recebidos";
-  var htmlR="";
-  for(var i=0;i<filtR.length;i++){
-    var r=filtR[i];
-    var cls=r.pasta==="CUR"||r.pasta==="INBOX"?"badge-inbox":"badge-spam";
-    htmlR+="<tr>";
-    htmlR+="<td class='col-data' title='"+r.data+"'>"+r.data+"</td>";
-    htmlR+="<td class='col-hora'>"+r.hora+"</td>";
-    htmlR+="<td class='col-dest' title='"+r.destinatario+"'>"+r.destinatario+"</td>";
-    htmlR+="<td class='col-rem' title='"+r.remetente+"'>"+r.remetente+"</td>";
-    htmlR+="<td class='col-assunto' title='"+r.assunto+"'>"+r.assunto+"</td>";
-    htmlR+="<td class='col-cc' title='"+r.cc+"'>"+r.cc+"</td>";
-    htmlR+="<td class='col-tipo'><span class='"+tipoBadge(r.tipo)+"'>"+r.tipo+"</span></td>";
-    htmlR+="<td><span class='badge "+cls+"'>"+r.pasta+"</span></td>";
-    htmlR+="</tr>";
+
+function authCell(dkim, spf, dmarc) {
+  function cls(v) {
+    if (!v) return 'auth-none';
+    v = v.toLowerCase();
+    return (v === 'pass') ? 'auth-pass' : 'auth-fail';
   }
-  tbR.innerHTML=htmlR||"<tr><td colspan='8' style='text-align:center;color:#555;padding:20px'>Nenhum resultado</td></tr>";
-  var tbE=document.getElementById("tabela-enviados");
-  var filtE=enviados.filter(function(e){return !busca||JSON.stringify(e).toLowerCase().indexOf(busca)>=0;});
-  var htmlE="";
-  for(var j=0;j<filtE.length;j++){
-    var ev=filtE[j];
-    htmlE+="<tr>";
-    htmlE+="<td class='col-data'>"+ev.data+"</td>";
-    htmlE+="<td class='col-hora'>"+ev.hora+"</td>";
-    htmlE+="<td class='col-dest' title='"+ev.remetente+"'>"+ev.remetente+"</td>";
-    htmlE+="<td class='col-ext'>"+ev.dominio_destino+"</td>";
-    htmlE+="<td class='col-ext' title='"+ev.host+"'>"+ev.host+"</td>";
-    htmlE+="<td>"+ev.rcpts+"</td>";
-    htmlE+="</tr>";
+  var d = dkim || '-', s = spf || '-', m = dmarc || '-';
+  return '<span class="' + cls(dkim)  + '" title="DKIM">D:' + d + '</span> ' +
+         '<span class="' + cls(spf)   + '" title="SPF">S:'  + s + '</span> ' +
+         '<span class="' + cls(dmarc) + '" title="DMARC">M:' + m + '</span>';
+}
+
+function scoreCell(score) {
+  if (!score && score !== 0) return '<span class="auth-none">-</span>';
+  var n = parseFloat(score);
+  var cls = n >= 5 ? 'score-high' : (n >= 2 ? 'score-med' : 'score-ok');
+  return '<span class="' + cls + '">' + score + '</span>';
+}
+
+function renderTabela(recebidos, enviados) {
+  var busca    = document.getElementById("busca").value.toLowerCase();
+  var filtroDeVal = document.getElementById("filtro-de").value;   // "2026-06-25"
+  var filtroAteVal = document.getElementById("filtro-ate").value;
+  var filtroDe  = filtroDeVal  ? new Date(filtroDeVal)  : null;
+  var filtroAte = filtroAteVal ? new Date(filtroAteVal) : null;
+  if (filtroAte) filtroAte.setHours(23,59,59);
+
+  var filtR = recebidos.filter(function(r) {
+    if (busca && JSON.stringify(r).toLowerCase().indexOf(busca) < 0) return false;
+    if (filtroDe || filtroAte) {
+      var d = parseDateBR(r.data);
+      if (d) {
+        if (filtroDe && d < filtroDe) return false;
+        if (filtroAte && d > filtroAte) return false;
+      }
+    }
+    return true;
+  });
+
+  document.getElementById("counter").textContent =
+    "Exibindo " + filtR.length + " de " + recebidos.length + " emails recebidos";
+
+  var tbR = document.getElementById("tabela-recebidos");
+  var htmlR = "";
+  for (var i = 0; i < filtR.length; i++) {
+    var r = filtR[i];
+    var rowCls = r.tipo === "Spam" ? " class='row-spam'" : "";
+    var pastaCls = (r.pasta === "CUR" || r.pasta === "INBOX") ? "badge-inbox" : "badge-spam-folder";
+    htmlR += "<tr" + rowCls + ">";
+    htmlR += "<td class='col-data'>" + r.data + "</td>";
+    htmlR += "<td class='col-hora'>" + r.hora + "</td>";
+    htmlR += "<td class='col-dest' title='" + esc(r.destinatario) + "'>" + r.destinatario + "</td>";
+    htmlR += "<td class='col-rem'  title='" + esc(r.remetente)    + "'>" + r.remetente    + "</td>";
+    htmlR += "<td class='col-assunto' title='" + esc(r.assunto)   + "'>" + r.assunto      + "</td>";
+    htmlR += "<td class='col-cc'   title='" + esc(r.cc||'')       + "'>" + (r.cc||'')     + "</td>";
+    htmlR += "<td class='col-tipo'><span class='" + tipoBadge(r.tipo) + "'>" + r.tipo + "</span></td>";
+    htmlR += "<td>" + scoreCell(r.spam_score) + "</td>";
+    htmlR += "<td style='white-space:nowrap'>" + authCell(r.dkim, r.spf, r.dmarc) + "</td>";
+    htmlR += "<td style='text-align:center'>" + (r.anexo ? "<span class='attach-icon' title='Tem anexo'>&#128206;</span>" : "") + "</td>";
+    htmlR += "<td><span class='badge " + pastaCls + "'>" + r.pasta + "</span></td>";
+    htmlR += "</tr>";
   }
-  tbE.innerHTML=htmlE||"<tr><td colspan='6' style='text-align:center;color:#555;padding:20px'>Nenhum resultado</td></tr>";
+  tbR.innerHTML = htmlR || "<tr><td colspan='11' style='text-align:center;color:#555;padding:20px'>Nenhum resultado</td></tr>";
+
+  var filtE = enviados.filter(function(e) {
+    if (!busca) return true;
+    return JSON.stringify(e).toLowerCase().indexOf(busca) >= 0;
+  });
+
+  var tbE = document.getElementById("tabela-enviados");
+  var htmlE = "";
+  for (var j = 0; j < filtE.length; j++) {
+    var ev = filtE[j];
+    htmlE += "<tr>";
+    htmlE += "<td class='col-data'>" + ev.data + "</td>";
+    htmlE += "<td class='col-hora'>" + ev.hora + "</td>";
+    htmlE += "<td class='col-dest' title='" + esc(ev.remetente)    + "'>" + ev.remetente    + "</td>";
+    htmlE += "<td class='col-rem'  title='" + esc(ev.destinatario||'') + "'>" + (ev.destinatario||'') + "</td>";
+    htmlE += "<td class='col-ext'>" + ev.dominio_destino + "</td>";
+    htmlE += "<td class='col-ext' title='" + esc(ev.host) + "'>" + ev.host + "</td>";
+    htmlE += "<td>" + ev.rcpts + "</td>";
+    htmlE += "</tr>";
+  }
+  tbE.innerHTML = htmlE || "<tr><td colspan='7' style='text-align:center;color:#555;padding:20px'>Nenhum resultado</td></tr>";
 }
-function filtrar(){if(dadosGlobais.recebidos)renderTabela(dadosGlobais.recebidos,dadosGlobais.enviados);}
-function sortTable(tab,col){
-  if(!dadosGlobais.recebidos) return;
-  var arr=tab==="recebidos"?dadosGlobais.recebidos:dadosGlobais.enviados;
-  var dir=sortDir[col]||1;
-  arr.sort(function(a,b){return a[col]>b[col]?dir:a[col]<b[col]?-dir:0;});
-  sortDir[col]=-dir;
-  renderTabela(dadosGlobais.recebidos,dadosGlobais.enviados);
+
+function esc(s) {
+  return (s||'').replace(/'/g,"&#39;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
-function mostrarTab(tab,btn){
-  document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active");});
-  document.querySelectorAll(".tabcontent").forEach(function(t){t.classList.remove("active");});
-  document.getElementById("tab-"+tab).classList.add("active");
+
+function sortTable(tab, col) {
+  if (!dadosGlobais.recebidos) return;
+  var arr = tab === "recebidos" ? dadosGlobais.recebidos : dadosGlobais.enviados;
+  var dir = sortDir[col] || 1;
+  arr.sort(function(a, b) { return a[col] > b[col] ? dir : a[col] < b[col] ? -dir : 0; });
+  sortDir[col] = -dir;
+  renderTabela(dadosGlobais.recebidos, dadosGlobais.enviados);
+}
+
+function mostrarTab(tab, btn) {
+  document.querySelectorAll(".tab").forEach(function(t) { t.classList.remove("active"); });
+  document.querySelectorAll(".tabcontent").forEach(function(t) { t.classList.remove("active"); });
+  document.getElementById("tab-" + tab).classList.add("active");
   btn.classList.add("active");
 }
+
 carregarDados();
-setInterval(carregarDados,120000);
+setInterval(carregarDados, 120000);
 </script>
 </body>
 </html>
