@@ -1,0 +1,46 @@
+#!/usr/bin/with-contenv sh
+
+if [ ! -z "$DISABLE_RSPAMD" ]; then
+
+   echo "* Rspamd disabled"
+
+   /bin/s6-svc -d /services/rspamd
+
+   exit 0;
+
+fi
+
+
+
+# Aguarda o Redis (socket) responder antes de subir o Rspamd.
+
+# Evita a corrida de boot que deixa o Bayes cego. Timeout de 30s:
+
+# se o Redis nao vier, sobe assim mesmo (nao trava o boot do container).
+
+i=0
+
+while [ $i -lt 30 ]; do
+
+   if redis-cli -s /var/run/redis/redis.sock ping 2>/dev/null | grep -q PONG; then
+
+      echo "* Redis pronto, iniciando Rspamd"
+
+      break
+
+   fi
+
+   echo "* aguardando Redis... ($i)"
+
+   i=$((i+1))
+
+   sleep 1
+
+done
+
+
+
+echo "* starting Rspamd"
+
+exec /usr/bin/rspamd -f -u _rspamd -g _rspamd
+
